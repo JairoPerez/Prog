@@ -272,7 +272,7 @@ public class Gestor {
 
         } while (!salir);
 
-        listado_reservas.add(new Reserva(token, asistente, evento, butaca, evento.getFecha(), evento.getHora()));
+        //listado_reservas.add(new Reserva(token, asistente, evento, butaca, evento.getFecha(), evento.getHora()));
 
         System.out.println("Aquí tienes el token de tu reserva procura no perderlo: " + token + "\n");
 
