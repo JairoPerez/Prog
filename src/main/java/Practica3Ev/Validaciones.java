@@ -2,10 +2,8 @@ package Practica3Ev;
 
 import java.math.BigInteger;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.Locale;
 import java.util.Scanner;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -114,6 +112,7 @@ public class Validaciones {
         String contrasena;
         boolean salir = false;
 
+
         do {
             contrasena = sc.nextLine();
 
@@ -198,6 +197,7 @@ public class Validaciones {
 
 
         do {
+
             do {
                 dni = sc.nextLine();
                 dni = dni.toUpperCase();
@@ -223,22 +223,32 @@ public class Validaciones {
                 }
             } while (dni_mal);
 
-            numeros_dni = dni.substring(0, 8);
-            letra_dni = dni.substring(8, 9);
+            try {
+                numeros_dni = dni.substring(0, 8);
+                letra_dni = dni.substring(8, 9);
 
-            valor = Integer.parseInt(numeros_dni);
-            valor = valor % 23;
-            if (!letra_dni.equals(String.valueOf(letras_validas.charAt(valor)))) {
+                valor = Integer.parseInt(numeros_dni);
+                valor = valor % 23;
+                if (!letra_dni.equals(String.valueOf(letras_validas.charAt(valor)))) {
+                    System.out.println("DNI incorrecto, por favor vuelva a introducirlo: ");
+                } else {
+                    bucle = false;
+                }
+            }catch (NumberFormatException ex){
                 System.out.println("DNI incorrecto, por favor vuelva a introducirlo: ");
-            } else {
-                bucle = false;
             }
+
         } while (bucle);
 
         return dni;
     }
 
     public static String crear_token() {
+        UUID token = UUID.randomUUID();
+        System.out.println(token.toString());
+        return token.toString();
+    }
+        /*
         String token;
         String token_final = "";
         String especiales = "!@#$%^&*";
@@ -255,10 +265,10 @@ public class Validaciones {
                 numero = (int) random;
                 token = String.valueOf(caracteres_validos.charAt(numero));
 
-                /*Aquí he generado un número aleatorio sobre la longitud de los carácteres validos para crear el token
+                Aquí he generado un número aleatorio sobre la longitud de los carácteres validos para crear el token
                  * Con este bucle for me encargo de que el máximo de carácteres sea 7 7 y 3 con contadores que iteran
                  * cuando el caracter generado es de ese tipo
-                 * */
+
                 for (int contador = 0; contador < token_final.length() + 1; ) {
                     if ((letras.contains(token))) {
                         contador_letras = contador_letras + 1;
@@ -314,8 +324,7 @@ public class Validaciones {
         } while ((contador_nums != 7 && contador_letras != 7 && contador_especiales != 3) && token_final.length() != 17);
         //Salgo del bucle cuando los contadores estén llenos y la longitud del token sea 17
 
-        return token_final;
-    }
+        return token_final;*/
 
     public static LocalDate validar_fecha() {
         Scanner sc = new Scanner(System.in);
@@ -485,6 +494,7 @@ public class Validaciones {
             case "2":
                 System.out.println("\nIntroduce una cuenta de Paypal: ");
                 validar_correo();
+
                 System.out.println("Introduzca su contraseña: ");
                 sc.nextLine();
                 System.out.println("\nPaypal registrado, se le cobrará en instantes\n");

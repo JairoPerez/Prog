@@ -1,4 +1,7 @@
 package Practica3Ev;
+import Practica3Ev.clases.Administrador;
+import Practica3Ev.clases.Usuario;
+
 import java.util.Scanner;
 
 public class Main {

@@ -1,4 +1,4 @@
-package Practica3Ev;
+package Practica3Ev.clases;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

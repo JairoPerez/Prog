@@ -1,6 +1,8 @@
-package Practica3Ev;
+package Practica3Ev.clases;
 
-public abstract class Usuario {
+import java.io.Serializable;
+
+public abstract class Usuario implements Serializable {
     protected String nombre;
     protected String apellidos;
     protected String email;
@@ -67,5 +69,17 @@ public abstract class Usuario {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "nombre='" + nombre + '\'' +
+                ", apellidos='" + apellidos + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", dni='" + dni + '\'' +
+                ", telefono='" + telefono + '\'' +
+                '}';
     }
 }

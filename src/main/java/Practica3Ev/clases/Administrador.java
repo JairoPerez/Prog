@@ -1,4 +1,4 @@
-package Practica3Ev;
+package Practica3Ev.clases;
 public class Administrador extends Usuario{
     private int permisos;
 

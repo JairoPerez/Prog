@@ -1,5 +1,10 @@
 package Practica3Ev;
 
+import Practica3Ev.Excepciones.EmailExistenteException;
+import Practica3Ev.Excepciones.ReservaInexistenteException;
+import Practica3Ev.Excepciones.UsuarioNoEncontradoException;
+import Practica3Ev.clases.*;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -54,6 +59,7 @@ public class Gestor {
     }
 
     public Usuario login() {
+
         String email;
         String password;
 
@@ -63,10 +69,16 @@ public class Gestor {
         System.out.println("Introduzca su contraseña: ");
         password = Validaciones.validar_contrasena();
 
-        for (Usuario a : listado_usuarios) {
-            if (email.equals(a.getEmail()) && password.equals(a.getPassword())) {
-                return a;
+        try {
+            for (Usuario a : listado_usuarios) {
+
+                if (email.equals(a.getEmail()) && password.equals(a.getPassword())) {
+                    return a;
+                }
             }
+            throw new UsuarioNoEncontradoException();
+        } catch (UsuarioNoEncontradoException ex) {
+            System.out.println(ex.getMessage());
         }
 
         System.out.println("El correo o la contraseña son incorrectos.");
@@ -96,10 +108,16 @@ public class Gestor {
             email = Validaciones.validar_correo();
 
             for (Usuario a : listado_usuarios) {
-                if (email.equals(a.getEmail())) {
-                    System.out.println("Ya existe un usuario con ese correo electrónico.");
-                    salir = true;
+
+                try {
+                    if (email.equals(a.getEmail())) {
+                        salir = true;
+                        throw new EmailExistenteException();
+                    }
+                } catch (EmailExistenteException ex) {
+                    System.out.println(ex.getMessage());
                 }
+
             }
         } while (salir);
 
@@ -141,21 +159,26 @@ public class Gestor {
             listado_salas[i] = new Sala("Sala " + i, misbutacas.size(), misbutacas, 100.0);
         }
 
+        listado_usuarios.add(new Asistente("Jairo", "Pérez", "jairo.perez@gmail.com", "Hola123425", "49626489x", "645039666", LocalDate.of(2005, 1, 23)));
+        listado_usuarios.add(new Asistente("Pepe", "Pérez", "jairo.perez@gmail.com", "Hola123425", "49626489x", "645039666", LocalDate.of(2005, 1, 23)));
+        listado_usuarios.add(new Asistente("Ramon", "Pérez", "jairo.perez@gmail.com", "Hola123425", "49626489x", "645039666", LocalDate.of(2005, 1, 23)));
+        listado_usuarios.add(new Administrador("root", "root", "admin@admin.com", "root12345", "49626489x", "645039665", 1));
+
         ArrayList<Usuario> asistentes_principito = new ArrayList<>();
         asistentes_principito.add(listado_usuarios.get(0));
         asistentes_principito.add(listado_usuarios.get(1));
 
         ArrayList<Usuario> asistentes_final_lec = new ArrayList<>();
-        asistentes_final_lec.add(listado_usuarios.get(2));
-        asistentes_final_lec.add(listado_usuarios.get(3));
+        asistentes_final_lec.add(listado_usuarios.get(0));
+        asistentes_final_lec.add(listado_usuarios.get(1));
 
         ArrayList<Usuario> asistentes_cisneNegro = new ArrayList<>();
-        asistentes_cisneNegro.add(listado_usuarios.get(4));
-        asistentes_cisneNegro.add(listado_usuarios.get(5));
+        asistentes_cisneNegro.add(listado_usuarios.get(0));
+        asistentes_cisneNegro.add(listado_usuarios.get(1));
 
         ArrayList<Usuario> asistentes_romeo_julieta = new ArrayList<>();
-        asistentes_romeo_julieta.add(listado_usuarios.get(3));
-        asistentes_romeo_julieta.add(listado_usuarios.get(5));
+        asistentes_romeo_julieta.add(listado_usuarios.get(0));
+        asistentes_romeo_julieta.add(listado_usuarios.get(1));
 
         ArrayList<Usuario> asistentes_bodas_de_sangre = new ArrayList<>();
         asistentes_bodas_de_sangre.add(listado_usuarios.get(0));
@@ -166,6 +189,7 @@ public class Gestor {
         listado_eventos.add(new Evento("El cisne negro", "Maricarmen", listado_salas[2], LocalDate.of(2024, 3, 13), LocalTime.of(19, 0), 30, "Película", listado_salas[2].total_butacas(), asistentes_cisneNegro));
         listado_eventos.add(new Evento("Romeo y Julieta", "Johnny Sins", listado_salas[3], LocalDate.of(2024, 7, 9), LocalTime.of(20, 0), 40, "Obra de teatro", listado_salas[3].total_butacas(), asistentes_romeo_julieta));
         listado_eventos.add(new Evento("Bodas de sangre", "Lorca", listado_salas[4], LocalDate.of(2024, 4, 4), LocalTime.of(18, 30), 50, "Obra de teatro", listado_salas[4].total_butacas(), asistentes_bodas_de_sangre));
+
 
     }
 
@@ -281,18 +305,20 @@ public class Gestor {
 
     public void informacion_reservas(Usuario asistente) {
 
-        if (!listado_reservas.isEmpty()) {
-            for (Reserva r : listado_reservas) {
-                if (r.getAsistente().equals(asistente)) {
-                    r.mostrar_info_reserva();
-                } else {
-                    System.out.println("No tiene ninguna reserva hecha, haga una reserva para ver su información.");
+        try {
+            if (!listado_reservas.isEmpty()) {
+                for (Reserva r : listado_reservas) {
+                    if (r.getAsistente().equals(asistente)) {
+                        r.mostrar_info_reserva();
+                    } else {
+                        throw new ReservaInexistenteException();
+                    }
                 }
             }
-        } else {
-            System.out.println("No tiene ninguna reserva hecha, haga una reserva para ver su información.");
+        } catch (ReservaInexistenteException ex) {
+            System.out.println(ex.getMessage());
         }
+
+
     }
-
-
 }
