@@ -107,18 +107,17 @@ public class Gestor {
             System.out.println("Introduzca su correo electrónico: ");
             email = Validaciones.validar_correo();
 
-            for (Usuario a : listado_usuarios) {
-
-                try {
+            try {
+                for (Usuario a : listado_usuarios) {
                     if (email.equals(a.getEmail())) {
                         salir = true;
                         throw new EmailExistenteException();
                     }
-                } catch (EmailExistenteException ex) {
-                    System.out.println(ex.getMessage());
                 }
-
+            } catch (EmailExistenteException ex) {
+                System.out.println(ex.getMessage());
             }
+
         } while (salir);
 
         System.out.println("Introduzca su contraseña: ");
@@ -136,6 +135,8 @@ public class Gestor {
         Usuario nuevoUsuario = new Asistente(nombre, apellidos, email, password, dni, telefono, fecha_nacimiento);
 
         listado_usuarios.add(nuevoUsuario);
+
+
 
         return nuevoUsuario;
     }
