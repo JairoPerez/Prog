@@ -5,6 +5,10 @@ import Practica3Ev.Excepciones.ReservaInexistenteException;
 import Practica3Ev.Excepciones.UsuarioNoEncontradoException;
 import Practica3Ev.clases.*;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -136,6 +140,16 @@ public class Gestor {
 
         listado_usuarios.add(nuevoUsuario);
 
+        try {
+            FileWriter fw = new FileWriter("src/main/java/Practica3Ev/data/usuarios.dat", true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(String.valueOf(nuevoUsuario));
+            bw.close();
+            System.out.println("\nAñadido correctamente");
+            System.out.println(nuevoUsuario);
+        }catch (IOException ex){
+            System.out.println("Error al añadir contenido al archivo");
+        }
 
 
         return nuevoUsuario;
@@ -165,35 +179,38 @@ public class Gestor {
         listado_usuarios.add(new Asistente("Ramon", "Pérez", "jairo.perez@gmail.com", "Hola123425", "49626489x", "645039666", LocalDate.of(2005, 1, 23)));
         listado_usuarios.add(new Administrador("root", "root", "admin@admin.com", "root12345", "49626489x", "645039665", 1));
 
-        ArrayList<Usuario> asistentes_principito = new ArrayList<>();
-        asistentes_principito.add(listado_usuarios.get(0));
-        asistentes_principito.add(listado_usuarios.get(1));
+        try{
+            ArrayList<Usuario> asistentes_principito = new ArrayList<>();
+            asistentes_principito.add(listado_usuarios.get(0));
+            asistentes_principito.add(listado_usuarios.get(1));
 
-        ArrayList<Usuario> asistentes_final_lec = new ArrayList<>();
-        asistentes_final_lec.add(listado_usuarios.get(0));
-        asistentes_final_lec.add(listado_usuarios.get(1));
+            ArrayList<Usuario> asistentes_final_lec = new ArrayList<>();
+            asistentes_final_lec.add(listado_usuarios.get(0));
+            asistentes_final_lec.add(listado_usuarios.get(1));
 
-        ArrayList<Usuario> asistentes_cisneNegro = new ArrayList<>();
-        asistentes_cisneNegro.add(listado_usuarios.get(0));
-        asistentes_cisneNegro.add(listado_usuarios.get(1));
+            ArrayList<Usuario> asistentes_cisneNegro = new ArrayList<>();
+            asistentes_cisneNegro.add(listado_usuarios.get(0));
+            asistentes_cisneNegro.add(listado_usuarios.get(1));
 
-        ArrayList<Usuario> asistentes_romeo_julieta = new ArrayList<>();
-        asistentes_romeo_julieta.add(listado_usuarios.get(0));
-        asistentes_romeo_julieta.add(listado_usuarios.get(1));
+            ArrayList<Usuario> asistentes_romeo_julieta = new ArrayList<>();
+            asistentes_romeo_julieta.add(listado_usuarios.get(0));
+            asistentes_romeo_julieta.add(listado_usuarios.get(1));
 
-        ArrayList<Usuario> asistentes_bodas_de_sangre = new ArrayList<>();
-        asistentes_bodas_de_sangre.add(listado_usuarios.get(0));
-        asistentes_bodas_de_sangre.add(listado_usuarios.get(2));
+            ArrayList<Usuario> asistentes_bodas_de_sangre = new ArrayList<>();
+            asistentes_bodas_de_sangre.add(listado_usuarios.get(0));
+            asistentes_bodas_de_sangre.add(listado_usuarios.get(2));
 
-        listado_eventos.add(new Evento("El principito", "Arnau Robles", listado_salas[0], LocalDate.of(2023, 5, 12), LocalTime.of(18, 0), 70, "Obra de teatro", listado_salas[0].total_butacas(), asistentes_principito));
-        listado_eventos.add(new Evento("Final de la LEC", "ElYoya", listado_salas[1], LocalDate.of(2024, 6, 25), LocalTime.of(17, 0), 50, "Torneo de sports", listado_salas[1].total_butacas(), asistentes_final_lec));
-        listado_eventos.add(new Evento("El cisne negro", "Maricarmen", listado_salas[2], LocalDate.of(2024, 3, 13), LocalTime.of(19, 0), 30, "Película", listado_salas[2].total_butacas(), asistentes_cisneNegro));
-        listado_eventos.add(new Evento("Romeo y Julieta", "Johnny Sins", listado_salas[3], LocalDate.of(2024, 7, 9), LocalTime.of(20, 0), 40, "Obra de teatro", listado_salas[3].total_butacas(), asistentes_romeo_julieta));
-        listado_eventos.add(new Evento("Bodas de sangre", "Lorca", listado_salas[4], LocalDate.of(2024, 4, 4), LocalTime.of(18, 30), 50, "Obra de teatro", listado_salas[4].total_butacas(), asistentes_bodas_de_sangre));
+            listado_eventos.add(new Evento("El principito", "Arnau Robles", listado_salas[0], LocalDate.of(2023, 5, 12), LocalTime.of(18, 0), 70, "Obra de teatro", listado_salas[0].total_butacas(), asistentes_principito));
+            listado_eventos.add(new Evento("Final de la LEC", "ElYoya", listado_salas[1], LocalDate.of(2024, 6, 25), LocalTime.of(17, 0), 50, "Torneo de sports", listado_salas[1].total_butacas(), asistentes_final_lec));
+            listado_eventos.add(new Evento("El cisne negro", "Maricarmen", listado_salas[2], LocalDate.of(2024, 3, 13), LocalTime.of(19, 0), 30, "Película", listado_salas[2].total_butacas(), asistentes_cisneNegro));
+            listado_eventos.add(new Evento("Romeo y Julieta", "Johnny Sins", listado_salas[3], LocalDate.of(2024, 7, 9), LocalTime.of(20, 0), 40, "Obra de teatro", listado_salas[3].total_butacas(), asistentes_romeo_julieta));
+            listado_eventos.add(new Evento("Bodas de sangre", "Lorca", listado_salas[4], LocalDate.of(2024, 4, 4), LocalTime.of(18, 30), 50, "Obra de teatro", listado_salas[4].total_butacas(), asistentes_bodas_de_sangre));
 
+        }catch (ArrayIndexOutOfBoundsException ex){
+            System.out.println("No hay ningun usuario listado.");
+        }
 
     }
-
 
     public void mostrar_eventos(Usuario asistente) {
         Scanner sc = new Scanner(System.in);

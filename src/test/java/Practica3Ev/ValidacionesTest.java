@@ -41,7 +41,7 @@ public class ValidacionesTest {
     }
     @Test
     public void TestContrasena(){
-        String input = "root12345";
+        String input = "Hola123v";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
 

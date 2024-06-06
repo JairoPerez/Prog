@@ -88,9 +88,9 @@ public class Validaciones {
             despues_punto = entre_arroba[1].split("\\.");
             //partimos el dominio por el punto para validar que no introduzca carácteres especiales no válidos ([dominio][tld])
 
-            if(despues_punto.length < 2){
+            if (despues_punto.length < 2) {
                 System.out.println("Formato de correo no válido, vuelva a introducirlo: ");
-            }else {
+            } else {
                 if (!despues_punto[0].matches("[a-zA-Z0-9._-]+")) {
                     System.out.println("Correo no válido, vuelva a introducirlo por favor: ");
                 } else if (!despues_punto[1].matches("[a-zA-Z]+")) { //puede contener número y/o carácteres especiales pero es muy raro
@@ -99,7 +99,6 @@ public class Validaciones {
                     terminar = true;
                 }
             }
-
 
 
         } while (!terminar);
@@ -120,10 +119,10 @@ public class Validaciones {
             Matcher matcher_letras = letras.matcher(contrasena);
 
             Pattern numeros = Pattern.compile("[0-9]+");
-            Matcher matcher_numeros = letras.matcher(contrasena);
+            Matcher matcher_numeros = numeros.matcher(contrasena);
 
             Pattern secuencia = Pattern.compile("123|1234|12345");
-            Matcher matcher_secuencia = letras.matcher(contrasena);
+            Matcher matcher_secuencia = secuencia.matcher(contrasena);
 
             Pattern especiales = Pattern.compile("[:-@] | [!-/] | [\\[-`]+");
 
@@ -225,6 +224,7 @@ public class Validaciones {
 
             try {
                 numeros_dni = dni.substring(0, 8);
+                numeros_dni = dni.substring(0, 8);
                 letra_dni = dni.substring(8, 9);
 
                 valor = Integer.parseInt(numeros_dni);
@@ -234,7 +234,7 @@ public class Validaciones {
                 } else {
                     bucle = false;
                 }
-            }catch (NumberFormatException ex){
+            } catch (NumberFormatException ex) {
                 System.out.println("DNI incorrecto, por favor vuelva a introducirlo: ");
             }
 
@@ -351,6 +351,7 @@ public class Validaciones {
                 if (matcher.find()) {
                     fecha_partes = fecha.split("-");
 
+
                     dia = Integer.parseInt(fecha_partes[0]);
                     mes = Integer.parseInt(fecha_partes[1]);
                     anno = Integer.parseInt(fecha_partes[2]);
@@ -464,8 +465,10 @@ public class Validaciones {
                     iban_convertido = iban_convertido.replace("E", "14");
                     iban_convertido = iban_convertido.replace("S", "28");
 
+
                     BigInteger iban_numero = new BigInteger(iban_convertido);
                     resultado = iban_numero.mod(BigInteger.valueOf((97)));
+
 
                     //Primero validamos que los dos primeros carateres sean letras y lo demás números
 
