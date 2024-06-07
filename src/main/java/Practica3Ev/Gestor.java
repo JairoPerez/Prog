@@ -106,17 +106,24 @@ public class Gestor {
         boolean salir = false;
 
         do {
-            System.out.println("Introduzca su nombre: ");
-            nombre = sc.nextLine();
-            nombre = Validaciones.validar_nombre(nombre);
+            do {
+                System.out.println("Introduzca su nombre: ");
+                nombre = sc.nextLine();
+                nombre = Validaciones.validar_nombre(nombre);
 
-            System.out.println("Introduzca sus apellidos: ");
-            apellidos = sc.nextLine();
-            apellidos = Validaciones.validar_nombre(apellidos);
+            } while (nombre.isEmpty());
 
-            System.out.println("Introduzca su correo electrónico: ");
-            email = sc.nextLine();
-            email = Validaciones.validar_correo(email);
+            do {
+                System.out.println("Introduzca sus apellidos: ");
+                apellidos = sc.nextLine();
+                apellidos = Validaciones.validar_nombre(apellidos);
+            } while (apellidos.isEmpty());
+
+            do {
+                System.out.println("Introduzca su correo electrónico: ");
+                email = sc.nextLine();
+                email = Validaciones.validar_correo(email);
+            } while (email.isEmpty());
 
             try {
                 for (Usuario a : listado_usuarios) {
@@ -131,21 +138,33 @@ public class Gestor {
 
         } while (salir);
 
-        System.out.println("Introduzca su contraseña: ");
-        password = sc.nextLine();
-        password = Validaciones.validar_contrasena(password);
+        do {
+            System.out.println("Introduzca su contraseña: ");
+            password = sc.nextLine();
+            password = Validaciones.validar_contrasena(password);
+        } while (password.isEmpty());
 
-        System.out.println("Introduzca su DNI: ");
-        dni = sc.nextLine();
-        dni = Validaciones.validar_dni(dni);
 
-        System.out.println("Introduzca su número de telefono: ");
-        telefono = sc.nextLine();
-        telefono = Validaciones.validar_telefono(telefono);
+        do {
+            System.out.println("Introduzca su DNI: ");
+            dni = sc.nextLine();
+            dni = Validaciones.validar_dni(dni);
+        } while (dni.isEmpty());
 
-        System.out.println("Introduzca su fecha de nacimiento: ");
-        fecha_nacimiento = sc.nextLine();
-        fecha_nacimiento = Validaciones.validar_fecha(fecha_nacimiento);
+
+        do {
+            System.out.println("Introduzca su número de telefono: ");
+            telefono = sc.nextLine();
+            telefono = Validaciones.validar_telefono(telefono);
+        } while (telefono.isEmpty());
+
+
+        do {
+            System.out.println("Introduzca su fecha de nacimiento: ");
+            fecha_nacimiento = sc.nextLine();
+            fecha_nacimiento = Validaciones.validar_fecha(fecha_nacimiento);
+        } while (fecha_nacimiento.isEmpty());
+
 
         Usuario nuevoUsuario = new Asistente(nombre, apellidos, email, password, dni, telefono, fecha_nacimiento);
 
