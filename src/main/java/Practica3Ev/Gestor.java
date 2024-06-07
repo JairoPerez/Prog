@@ -5,10 +5,7 @@ import Practica3Ev.Excepciones.ReservaInexistenteException;
 import Practica3Ev.Excepciones.UsuarioNoEncontradoException;
 import Practica3Ev.clases.*;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -27,7 +24,12 @@ public class Gestor {
         listado_salas = new Sala[5];
         listado_usuarios = new ArrayList<>();
         listado_reservas = new ArrayList<>();
-        info_inicial();
+        try {
+            info_inicial();
+        } catch (IOException ex) {
+            System.out.println("Problemas en la conexión con el fichero");
+        }
+
     }
 
     public ArrayList<Evento> getListado_eventos() {
@@ -63,15 +65,17 @@ public class Gestor {
     }
 
     public Usuario login() {
+        Scanner sc = new Scanner(System.in);
 
-        String email;
-        String password;
+        String email = sc.nextLine();
+        String password = sc.nextLine();
+
 
         System.out.println("Introduzca su correo electrónico: ");
-        email = Validaciones.validar_correo();
+        email = Validaciones.validar_correo(email);
 
         System.out.println("Introduzca su contraseña: ");
-        password = Validaciones.validar_contrasena();
+        password = Validaciones.validar_contrasena(password);
 
         try {
             for (Usuario a : listado_usuarios) {
@@ -90,26 +94,29 @@ public class Gestor {
     }
 
     public Usuario registro() {
-
+        Scanner sc = new Scanner(System.in);
         String nombre;
         String apellidos;
         String email;
         String dni;
         String telefono;
         String password;
-        LocalDate fecha_nacimiento;
+        String fecha_nacimiento;
         boolean esAdmin = false;
         boolean salir = false;
 
         do {
             System.out.println("Introduzca su nombre: ");
-            nombre = Validaciones.validar_nombre();
+            nombre = sc.nextLine();
+            nombre = Validaciones.validar_nombre(nombre);
 
             System.out.println("Introduzca sus apellidos: ");
-            apellidos = Validaciones.validar_nombre();
+            apellidos = sc.nextLine();
+            apellidos = Validaciones.validar_nombre(apellidos);
 
             System.out.println("Introduzca su correo electrónico: ");
-            email = Validaciones.validar_correo();
+            email = sc.nextLine();
+            email = Validaciones.validar_correo(email);
 
             try {
                 for (Usuario a : listado_usuarios) {
@@ -125,16 +132,20 @@ public class Gestor {
         } while (salir);
 
         System.out.println("Introduzca su contraseña: ");
-        password = Validaciones.validar_contrasena();
+        password = sc.nextLine();
+        password = Validaciones.validar_contrasena(password);
 
         System.out.println("Introduzca su DNI: ");
-        dni = Validaciones.validar_dni();
+        dni = sc.nextLine();
+        dni = Validaciones.validar_dni(dni);
 
         System.out.println("Introduzca su número de telefono: ");
-        telefono = Validaciones.validar_telefono();
+        telefono = sc.nextLine();
+        telefono = Validaciones.validar_telefono(telefono);
 
         System.out.println("Introduzca su fecha de nacimiento: ");
-        fecha_nacimiento = Validaciones.validar_fecha();
+        fecha_nacimiento = sc.nextLine();
+        fecha_nacimiento = Validaciones.validar_fecha(fecha_nacimiento);
 
         Usuario nuevoUsuario = new Asistente(nombre, apellidos, email, password, dni, telefono, fecha_nacimiento);
 
@@ -147,7 +158,7 @@ public class Gestor {
             bw.close();
             System.out.println("\nAñadido correctamente");
             System.out.println(nuevoUsuario);
-        }catch (IOException ex){
+        } catch (IOException ex) {
             System.out.println("Error al añadir contenido al archivo");
         }
 
@@ -156,7 +167,7 @@ public class Gestor {
     }
 
 
-    public void info_inicial() {
+    public void info_inicial() throws IOException {
 
         int identificador = 0;
 
@@ -174,12 +185,49 @@ public class Gestor {
             listado_salas[i] = new Sala("Sala " + i, misbutacas.size(), misbutacas, 100.0);
         }
 
-        listado_usuarios.add(new Asistente("Jairo", "Pérez", "jairo.perez@gmail.com", "Hola123425", "49626489x", "645039666", LocalDate.of(2005, 1, 23)));
-        listado_usuarios.add(new Asistente("Pepe", "Pérez", "jairo.perez@gmail.com", "Hola123425", "49626489x", "645039666", LocalDate.of(2005, 1, 23)));
-        listado_usuarios.add(new Asistente("Ramon", "Pérez", "jairo.perez@gmail.com", "Hola123425", "49626489x", "645039666", LocalDate.of(2005, 1, 23)));
-        listado_usuarios.add(new Administrador("root", "root", "admin@admin.com", "root12345", "49626489x", "645039665", 1));
+//        listado_usuarios.add(new Asistente("Jairo", "Pérez", "jairo.perez@gmail.com", "Hola123425", "49626489x", "645039666", "12-04-2000"));
+//        listado_usuarios.add(new Asistente("Pepe", "Pérez", "jairo.perez@gmail.com", "Hola123425", "49626489x", "645039666", "12-04-2000"));
+//        listado_usuarios.add(new Asistente("Ramon", "Pérez", "jairo.perez@gmail.com", "Hola123425", "49626489x", "645039666", "12-04-2000"));
+//        listado_usuarios.add(new Administrador("root", "root", "admin@admin.com", "root12345", "49626489x", "645039665", 1));
+//
+        try {
+            FileInputStream fis = new FileInputStream("src/main/java/Practica3Ev/data/usuario.dat");
+            ObjectInputStream ois = new ObjectInputStream(fis);
 
-        try{
+            while (true) {
+                Usuario u = (Usuario) ois.readObject();
+                listado_usuarios.add(u);
+            }
+        } catch (EOFException ex) {
+            System.out.println("Se han leído todos los usuarios");
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Hay un error en la clase");
+        }
+
+
+//        FileOutputStream fos = null;
+//        ObjectOutputStream oos = null;
+//
+//        try {
+//            fos = new FileOutputStream("src/main/java/Practica3Ev/data/usuario.dat");
+//            oos = new ObjectOutputStream(fos);
+//            for (Usuario u : listado_usuarios) {
+//                oos.writeObject(u);
+//            }
+//        } catch (FileNotFoundException ex) {
+//            System.out.println("No se ha encontrado el archivo.");
+//        } finally {
+//            oos.flush();
+//            oos.close();
+//            fos.close();
+//        }
+
+
+        for (Usuario u : listado_usuarios) {
+            System.out.println(u.toString());
+        }
+
+        try {
             ArrayList<Usuario> asistentes_principito = new ArrayList<>();
             asistentes_principito.add(listado_usuarios.get(0));
             asistentes_principito.add(listado_usuarios.get(1));
@@ -200,13 +248,13 @@ public class Gestor {
             asistentes_bodas_de_sangre.add(listado_usuarios.get(0));
             asistentes_bodas_de_sangre.add(listado_usuarios.get(2));
 
-            listado_eventos.add(new Evento("El principito", "Arnau Robles", listado_salas[0], LocalDate.of(2023, 5, 12), LocalTime.of(18, 0), 70, "Obra de teatro", listado_salas[0].total_butacas(), asistentes_principito));
-            listado_eventos.add(new Evento("Final de la LEC", "ElYoya", listado_salas[1], LocalDate.of(2024, 6, 25), LocalTime.of(17, 0), 50, "Torneo de sports", listado_salas[1].total_butacas(), asistentes_final_lec));
-            listado_eventos.add(new Evento("El cisne negro", "Maricarmen", listado_salas[2], LocalDate.of(2024, 3, 13), LocalTime.of(19, 0), 30, "Película", listado_salas[2].total_butacas(), asistentes_cisneNegro));
+            listado_eventos.add(new Evento("El principito", "Mari Carmen Ortuño", listado_salas[0], LocalDate.of(2025, 5, 12), LocalTime.of(18, 0), 70, "Obra de teatro", listado_salas[0].total_butacas(), asistentes_principito));
+            listado_eventos.add(new Evento("Final de la LEC", "Isabel Lafuente Garcia", listado_salas[1], LocalDate.of(2025, 6, 25), LocalTime.of(17, 0), 50, "Torneo de sports", listado_salas[1].total_butacas(), asistentes_final_lec));
+            listado_eventos.add(new Evento("El cisne negro", "Victor Sarabia Simon", listado_salas[2], LocalDate.of(2025, 3, 13), LocalTime.of(19, 0), 30, "Película", listado_salas[2].total_butacas(), asistentes_cisneNegro));
             listado_eventos.add(new Evento("Romeo y Julieta", "Johnny Sins", listado_salas[3], LocalDate.of(2024, 7, 9), LocalTime.of(20, 0), 40, "Obra de teatro", listado_salas[3].total_butacas(), asistentes_romeo_julieta));
-            listado_eventos.add(new Evento("Bodas de sangre", "Lorca", listado_salas[4], LocalDate.of(2024, 4, 4), LocalTime.of(18, 30), 50, "Obra de teatro", listado_salas[4].total_butacas(), asistentes_bodas_de_sangre));
+            listado_eventos.add(new Evento("Bodas de sangre", "Lorca", listado_salas[4], LocalDate.of(2024, 10, 4), LocalTime.of(18, 30), 50, "Obra de teatro", listado_salas[4].total_butacas(), asistentes_bodas_de_sangre));
 
-        }catch (ArrayIndexOutOfBoundsException ex){
+        } catch (ArrayIndexOutOfBoundsException ex) {
             System.out.println("No hay ningun usuario listado.");
         }
 
@@ -287,7 +335,9 @@ public class Gestor {
             System.out.println("\nSeleccione un asiento para el evento: \n");
             evento.mostrar_butacas();
             System.out.println();
-            asiento = Validaciones.comprobar_asiento();
+            Scanner sc = new Scanner(System.in);
+            asiento = sc.nextLine();
+            asiento = Validaciones.comprobar_asiento(asiento);
 
             for (Butaca b : evento.getSala().getLista_butacas()) {
                 if (b.getPosicion().equals(asiento)) {
@@ -336,7 +386,6 @@ public class Gestor {
         } catch (ReservaInexistenteException ex) {
             System.out.println(ex.getMessage());
         }
-
-
     }
 }
+

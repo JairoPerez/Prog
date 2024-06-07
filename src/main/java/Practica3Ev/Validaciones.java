@@ -8,13 +8,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Validaciones {
-    public static String comprobar_asiento() {
-        Scanner sc = new Scanner(System.in);
-        String asiento;
+    public static String comprobar_asiento(String asiento) {
         boolean repetir = true;
 
         do {
-            asiento = sc.nextLine();
             asiento = asiento.toUpperCase();
 
             //Si el asiento tiene más de 2 carácteres da como no válido
@@ -33,34 +30,27 @@ public class Validaciones {
         return asiento;
     }
 
-    //todo: Cambiar validacion nombre usando expresiones regulares
-    public static String validar_nombre() {
-        Scanner sc = new Scanner(System.in);
-        String nombre_apellidos;
+    public static String validar_nombre(String nombre_apellidos) {
         char letra;
         boolean terminar = true;
 
+
         do {
-            nombre_apellidos = sc.nextLine();
             nombre_apellidos = nombre_apellidos.toUpperCase();
 
-            for (int i = 0; i < nombre_apellidos.length(); i++) {
-                letra = nombre_apellidos.charAt(i);
-                if ((letra < 'A' || letra > 'Z') && (letra != 'Ç' && letra != 'Ñ' && letra != 'Á' && letra != 'É' && letra != 'Í' && letra != 'Ó' && letra != 'Ú' && letra != ' ' && letra != 'Ä' && letra != 'Ë' && letra != 'Ï' && letra != 'Ö' && letra != 'Ü')) {
-                    System.out.println("Error: Formato de entrada inválido. Por favor, introduce un valor válido: ");
-                    terminar = true;
-                    break;
-                } else {
-                    terminar = false;
-                }
+            if (!nombre_apellidos.matches("^[a-zA-ZáéíóúñÑÁÉÍÓÚÄËÏÖÜ\\s]+$")) {
+                System.out.println("Formato de entrada inválido. Por favor, introduce un valor correcto: ");
+                terminar = true;
+
+            } else {
+                terminar = false;
             }
+
         } while (terminar);
         return nombre_apellidos;
     }
 
-    public static String validar_correo() {
-        Scanner sc = new Scanner(System.in);
-        String correo;
+    public static String validar_correo(String correo) {
         String[] entre_arroba;
         String[] despues_punto;
 
@@ -69,7 +59,6 @@ public class Validaciones {
 
         do {
             do {
-                correo = sc.nextLine();
                 correo = correo.toLowerCase();
                 correo = correo.replace(" ", "");
 
@@ -78,7 +67,7 @@ public class Validaciones {
 
                 if (!correo.contains("@") || !correo.contains(".")) {
                     System.out.println("Correo no válido, vuelva a intorducirlo por favor: ");
-                } else if (!entre_arroba[0].matches("[a-zA-Z0-9._-]+")) { //partimos el string por el @ para que sea más fácil validar con expresión regular ([usuario]@[dominio])
+                } else if (!entre_arroba[0].matches("[a-zA-ZáéíóúñÑÁÉÍÓÚÄËÏÖÜ0-9._-]+")) { //partimos el string por el @ para que sea más fácil validar con expresión regular ([usuario]@[dominio])
                     System.out.println("Correo no válido, vuelva a introducirlo por favor: ");
                 } else {
                     necesario = true;
@@ -91,10 +80,10 @@ public class Validaciones {
             if (despues_punto.length < 2) {
                 System.out.println("Formato de correo no válido, vuelva a introducirlo: ");
             } else {
-                if (!despues_punto[0].matches("[a-zA-Z0-9._-]+")) {
+                if (!despues_punto[0].matches("[a-zA-ZáéíóúñÑÁÉÍÓÚÄËÏÖÜ0-9._-]+")) {
                     System.out.println("Correo no válido, vuelva a introducirlo por favor: ");
-                } else if (!despues_punto[1].matches("[a-zA-Z]+")) { //puede contener número y/o carácteres especiales pero es muy raro
-                    System.out.println("Correo no válido, vuelva a introducirlo por favor: "); //todo: como válidar si el usuario pone .com.co
+                } else if (!despues_punto[1].matches("[a-zA-ZáéíóúñÑÁÉÍÓÚÄËÏÖÜ]+")) { //puede contener número y/o carácteres especiales pero es muy raro
+                    System.out.println("Correo no válido, vuelva a introducirlo por favor: ");
                 } else {
                     terminar = true;
                 }
@@ -106,55 +95,39 @@ public class Validaciones {
         return correo;
     }
 
-    public static String validar_contrasena() {
-        Scanner sc = new Scanner(System.in);
-        String contrasena;
+    public static String validar_contrasena(String contrasena) {
         boolean salir = false;
 
 
         do {
-            contrasena = sc.nextLine();
-
             Pattern letras = Pattern.compile("[a-zA-Z]+");
             Matcher matcher_letras = letras.matcher(contrasena);
 
             Pattern numeros = Pattern.compile("[0-9]+");
             Matcher matcher_numeros = numeros.matcher(contrasena);
 
-            Pattern secuencia = Pattern.compile("123|1234|12345");
+            Pattern secuencia = Pattern.compile("123|1234|12345+");
             Matcher matcher_secuencia = secuencia.matcher(contrasena);
 
-            Pattern especiales = Pattern.compile("[:-@] | [!-/] | [\\[-`]+");
+            if (!matcher_secuencia.find() && (matcher_letras.find() && matcher_numeros.find()) == true) {
+                if (contrasena.length() >= 8 && contrasena.length() <= 20){
+                    salir=true;
+                }else{
+                    System.out.println("Tu contraseña debe tener entre 8 a 20 carácteres");
+                }
 
-            if (matcher_letras.find() && matcher_secuencia.find() && matcher_numeros.find()) {
-                salir = true;
             } else {
                 System.out.println("Contraseña no válida, la contraseña debe tener al menos un carácter y un número, no contener una secuencia de números y tener una longitud de 8 a 20 carácteres.");
             }
-
-//            if (!contrasena.matches("[a-zA-Z0-9]"))  {
-//                System.out.println("La contraseña debe contener al menos una letra y un número.");
-//            } else if (contrasena.matches("123|1234|12345")) {
-//                System.out.println("Procura no usar cadenas de números ya que pueden ser vulnerables.");
-//            } else if (contrasena.length() < 8 || contrasena.length() > 20) {
-//                System.out.println("La contraseña debe tener entre 8 y 20 carácteres");
-//            } else {
-//                salir = true;
-//            }
         } while (!salir);
-
-
         return contrasena;
     }
 
-    public static String validar_telefono() {
-        Scanner sc = new Scanner(System.in);
-        String numero_telefono;
+    public static String validar_telefono(String numero_telefono) {
         char numero;
         boolean valido = true;
 
         do {
-            numero_telefono = sc.nextLine();
             numero_telefono = numero_telefono.replace("-", "");
             numero_telefono = numero_telefono.replace(" ", "");
 
@@ -186,9 +159,8 @@ public class Validaciones {
         return numero_telefono;
     }
 
-    public static String validar_dni() {
-        Scanner sc = new Scanner(System.in);
-        String dni, numeros_dni, letra_dni, letras_validas = "TRWAGMYFPDXBNJZSQVHLCKE";
+    public static String validar_dni(String dni) {
+        String numeros_dni, letra_dni, letras_validas = "TRWAGMYFPDXBNJZSQVHLCKE";
         int valor;
         char total;
         boolean bucle = true;
@@ -198,7 +170,6 @@ public class Validaciones {
         do {
 
             do {
-                dni = sc.nextLine();
                 dni = dni.toUpperCase();
                 dni = dni.replace(" ", "");
 
@@ -224,7 +195,6 @@ public class Validaciones {
 
             try {
                 numeros_dni = dni.substring(0, 8);
-                numeros_dni = dni.substring(0, 8);
                 letra_dni = dni.substring(8, 9);
 
                 valor = Integer.parseInt(numeros_dni);
@@ -248,88 +218,8 @@ public class Validaciones {
         System.out.println(token.toString());
         return token.toString();
     }
-        /*
-        String token;
-        String token_final = "";
-        String especiales = "!@#$%^&*";
-        String numeros = "0123456789";
-        String letras = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        String caracteres_validos = letras + numeros + especiales; //Aquí creo una cadena de caracteres válidos concatenando los strings de los caracteres permitidos
-        int numero;
-        int contador_letras = 0, contador_nums = 0, contador_especiales = 0;
-        double random;
 
-        do { //Con este bucle for me aseguro de que la longitud del token sea de 17 carácteres
-            for (int i = 0; i <= 16; i++) {
-                random = Math.random() * caracteres_validos.length();
-                numero = (int) random;
-                token = String.valueOf(caracteres_validos.charAt(numero));
-
-                Aquí he generado un número aleatorio sobre la longitud de los carácteres validos para crear el token
-                 * Con este bucle for me encargo de que el máximo de carácteres sea 7 7 y 3 con contadores que iteran
-                 * cuando el caracter generado es de ese tipo
-
-                for (int contador = 0; contador < token_final.length() + 1; ) {
-                    if ((letras.contains(token))) {
-                        contador_letras = contador_letras + 1;
-
-                        //Cuando un contador se llena se reemplaza la cadena de los caracteres validos por la concatenación de los otros dos strings
-                        //(en este caso las letras)
-
-                        if (contador_letras == 7 && contador_nums != 7 && contador_especiales != 3) {
-                            caracteres_validos = numeros + especiales;
-                        } else if (contador_letras == 7 && contador_nums == 7 && contador_especiales != 3) {
-                            caracteres_validos = especiales;
-                        } else if (contador_letras == 7 && contador_nums != 7) {
-                            caracteres_validos = numeros;
-                        }
-                    } else if ((numeros.contains(token))) {
-                        contador_nums = contador_nums + 1;
-                        if (contador_nums == 7 && contador_especiales != 3 && contador_letras != 7) {
-                            caracteres_validos = letras + especiales;
-                        } else if (contador_nums == 7 && contador_letras == 7 && contador_especiales != 3) {
-                            caracteres_validos = especiales;
-                        } else if (contador_nums == 7 && contador_letras != 7) {
-                            caracteres_validos = letras;
-                        }
-                    } else if (especiales.contains(token)) {
-                        contador_especiales = contador_especiales + 1;
-                        if (contador_especiales == 3 && contador_letras != 7 && contador_nums != 7) {
-                            caracteres_validos = letras + numeros;
-                        } else if (contador_especiales == 3 && contador_nums == 7 && contador_letras != 7) {
-                            caracteres_validos = letras;
-                        } else if (contador_especiales == 3 && contador_nums != 7) {
-                            caracteres_validos = numeros;
-                        }
-                    }
-
-                    //Con este if hago que si algún caracter se repite se borre del token generado y le reste una iteración al contador pertinente
-                    if (token_final.indexOf(token.charAt(contador)) != -1) {
-                        if (letras.indexOf(token.charAt(contador)) != -1) {
-                            contador_letras = contador_letras - 1;
-                        } else if (numeros.indexOf(token.charAt(contador)) != -1) {
-                            contador_nums = contador_nums - 1;
-                        } else if (especiales.indexOf(token.charAt(contador)) != -1) {
-                            contador_especiales = contador_especiales - 1;
-                        }
-                        token = token.replace(token, "");
-                        i = i - 1;
-                        break;
-                    } else {
-                        token_final = token_final.concat(token);
-                    }
-                    break;
-                }
-            }
-        } while ((contador_nums != 7 && contador_letras != 7 && contador_especiales != 3) && token_final.length() != 17);
-        //Salgo del bucle cuando los contadores estén llenos y la longitud del token sea 17
-
-        return token_final;*/
-
-    public static LocalDate validar_fecha() {
-        Scanner sc = new Scanner(System.in);
-
-        String fecha;
+    public static String validar_fecha(String fecha) {
         String[] fecha_partes;
         LocalDate fecha_validada = null;
         LocalDate fecha_mayor;
@@ -341,7 +231,6 @@ public class Validaciones {
 
         do {
             do {
-                fecha = sc.nextLine();
                 fecha = fecha.replace("/", "-");
                 fecha = fecha.replace(" ", "-");
 
@@ -397,7 +286,7 @@ public class Validaciones {
                 }
             } while (!volver);
         } while (!salir);
-        return fecha_validada;
+        return fecha_validada.toString();
     }
 
     public static String metodo_pago() {
@@ -496,14 +385,15 @@ public class Validaciones {
 
             case "2":
                 System.out.println("\nIntroduce una cuenta de Paypal: ");
-                validar_correo();
+                String email = sc.nextLine();
+                validar_correo(email);
 
                 System.out.println("Introduzca su contraseña: ");
                 sc.nextLine();
                 System.out.println("\nPaypal registrado, se le cobrará en instantes\n");
                 break;
             case "3":
-                System.out.println("\nHaz un bizum al: 633615163\n");
+                System.out.println("\nHaz un bizum al: 645039666\n");
                 break;
         }
 

@@ -1,7 +1,10 @@
 package Practica3Ev;
+
+import Practica3Ev.Excepciones.Myexception;
 import Practica3Ev.clases.Administrador;
 import Practica3Ev.clases.Usuario;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -10,86 +13,110 @@ public class Main {
         Gestor gestor_eventos = new Gestor();
         Usuario miasistente = null;
         Scanner sc = new Scanner(System.in);
-        String opcion;
-        String opcionAdmin;
-        String opcionEvento;
-
+        int opcionAdmin = 0;
+        int opcionEvento = 0;
 
 
         do {
-            System.out.println("""
-                     |------------------------|
-                    |# DELECTARE MULTIEVENTOS #|
-                     |------------------------|
-                     |   1. Login             |
-                     |   2. Registrarse       |
-                     |   3. Salir             |
-                     --------------------------
-                       Seleccione una opción:
-                         """);
+            try {
+                System.out.println("""
+                         |------------------------|
+                        |# DELECTARE MULTIEVENTOS #|
+                         |------------------------|
+                         |   1. Login             |
+                         |   2. Registrarse       |
+                         |   3. Salir             |
+                         --------------------------
+                           Seleccione una opción:
+                             """);
 
-            opcion = sc.nextLine();
+                int opcion = sc.nextInt();
 
-            switch (opcion) {
-                case "1":
-                    miasistente = gestor_eventos.login();
-                    break;
-                case "2":
-                    miasistente = gestor_eventos.registro();
-                    break;
-                case "3":
-                    System.out.println("Saliendo...");
-                    System.exit(0);
-                    break;
-                default:
-                    System.out.println("Introduzca una opción válida.");
+                switch (opcion) {
+                    case 1:
+
+                        miasistente = gestor_eventos.login();
+                        break;
+                    case 2:
+                        miasistente = gestor_eventos.registro();
+                        break;
+                    case 3:
+                        System.out.println("Saliendo...");
+                        System.exit(0);
+                        break;
+                    default:
+                        System.out.println("Introduzca una opción válida.");
+                }
+
+            } catch (InputMismatchException ex) {
+                System.out.println(ex.getMessage());
+                sc.next();
             }
         } while (miasistente == null);
 
 
         if (miasistente instanceof Administrador) {
             do {
-                System.out.println("MENÚ PARA ADMINISTRADORES DE DELECTARE: ");
-                System.out.println("1. Gestionar eventos: ");
-                System.out.println("2. Gestionar usuarios: ");
-                System.out.println("3. Salir");
+                try {
+                    System.out.println("MENÚ PARA ADMINISTRADORES DE DELECTARE: ");
+                    System.out.println("1. Gestionar eventos: ");
+                    System.out.println("2. Gestionar usuarios: ");
+                    System.out.println("3. Salir");
 
-                opcionAdmin = sc.nextLine();
+                    opcionAdmin = sc.nextInt();
 
-                if (opcionAdmin.equals("1")) {
-                    System.out.println("Menú para gestionar los eventos.");
-                } else if (opcionAdmin.equals("2")) {
-                    System.out.println("Menú para gestionar los usuarios: ");
-                } else if (opcionAdmin.equals("3")) {
-                    System.out.println("Saliendo...");
+                    if (opcionAdmin == 1) {
+                        System.out.println("Menú para gestionar los eventos.");
+                    } else if (opcionAdmin == 2) {
+                        System.out.println("Menú para gestionar los usuarios: ");
+                    } else if (opcionAdmin == 3) {
+                        System.out.println("Saliendo...");
+                    }
+                } catch (InputMismatchException ex) {
+                    System.out.println("Introduce carácter válido");
+                    sc.next();
                 }
 
-            } while (!opcionAdmin.equals("3"));
+            } while (opcionAdmin != 3);
+
         } else {
+
             do {
-                System.out.println("""
-                        \n-----------------
-                        ### DELECTARE ###
-                        -----------------
+                try {
+                    System.out.println("""
+                            \n-----------------
+                            ### DELECTARE ###
+                            -----------------
 
-                        1. Seleccionar evento.
-                        2. Información reservas.
-                        3. Salir.
+                            1. Seleccionar evento.
+                            2. Información reservas.
+                            3. Salir.
 
-                        Por favor, seleccione una opción:
-                        """);
-                opcionEvento = sc.nextLine();
+                            Por favor, seleccione una opción:
+                            """);
+                    opcionEvento = sc.nextInt();
 
-                if (opcionEvento.equals("1")) {
-                    gestor_eventos.mostrar_eventos(miasistente);
-                } else if (opcionEvento.equals("2")) {
-                    gestor_eventos.informacion_reservas(miasistente);
-                } else if (opcionEvento.equals("3")) {
-                    System.out.println("Saliendo...");
-                } else {
-                    System.out.println("Introduzca una opción válida.");
+                    if (opcionEvento == 3) {
+                        gestor_eventos.mostrar_eventos(miasistente);
+                    } else if (opcionEvento == 3) {
+                        gestor_eventos.informacion_reservas(miasistente);
+                    } else if (opcionEvento == 3) {
+                        System.out.println("Saliendo...");
+                    } else {
+                        System.out.println("Introduzca una opción válida.");
+                    }
+                } catch (InputMismatchException ex) {
+                    System.out.println("erro");
+                    sc.next();
                 }
-            } while (!opcionEvento.equals("3"));
+
+            } while (opcionEvento != 3);
         }
+
+
+        {
+            System.out.println("Introduce un número.");
+        }
+
     }
 }
