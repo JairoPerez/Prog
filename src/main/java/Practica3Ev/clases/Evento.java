@@ -17,6 +17,9 @@ public class Evento {
     int asistentes_maximos;
     ArrayList<Usuario> lista_asistentes;
 
+    public Evento(){
+
+    }
 
     public Evento(String nombre, String invitado, Sala sala, LocalDate fecha, LocalTime hora, double precio, String tipo_evento, int asistentes_maximos, ArrayList<Usuario> lista_asistentes) {
         this.nombre = nombre;
