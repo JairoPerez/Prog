@@ -2,6 +2,7 @@ package Practica3Ev;
 
 import java.math.BigInteger;
 import java.time.LocalDate;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -240,7 +241,6 @@ public class Validaciones {
         if (matcher.find()) {
             fecha_partes = fecha.split("-");
 
-
             dia = Integer.parseInt(fecha_partes[0]);
             mes = Integer.parseInt(fecha_partes[1]);
             anno = Integer.parseInt(fecha_partes[2]);
@@ -409,5 +409,26 @@ public class Validaciones {
             pago = "El método de pago ha sido: Bizum";
         }
         return pago;
+    }
+
+    public static String validar_int(String int_valido){
+       try{
+           Integer.parseInt(int_valido);
+       }catch (NumberFormatException ex){
+           System.out.println("Ha introducido un carácter no númerico o con decimales");
+           return "";
+       }
+
+        return int_valido;
+    }
+
+    public static String validar_double(String double_valido){
+        try{
+            Double.parseDouble(double_valido);
+        }catch (NumberFormatException ex){
+            System.out.println("Introduce un precio válido");
+            return "";
+        }
+     return double_valido;
     }
 }

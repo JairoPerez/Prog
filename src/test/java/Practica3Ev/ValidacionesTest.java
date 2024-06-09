@@ -13,7 +13,7 @@ public class ValidacionesTest {
 
     @Test
     public void TestCorreo1() {
-        String input = "jáiro@-cox23@gmail.com";
+        String input = "jáiro-cox@cox23gmail.com";
         String resultado = Validaciones.validar_correo(input);
         assertEquals(input, resultado);
     }
@@ -29,7 +29,24 @@ public class ValidacionesTest {
         String input = "HolaBue02";
         String resultado = Validaciones.validar_contrasena(input);
         assertEquals(input, resultado);
-
+    }
+    @Test
+    public void TestDouble(){
+        String input = "5200.50";
+        String resultado = Validaciones.validar_double(input);
+        assertEquals(input, resultado);
+    }
+    @Test
+    public void TestInt(){
+        String input = "520";
+        String resultado = Validaciones.validar_int(input);
+        assertEquals(input, resultado);
+    }
+    @Test
+    public void ValidarFecha(){
+        String input = "23-03-1900";
+        String resultado = Validaciones.validar_fecha(input);
+        assertEquals(input, resultado);
     }
 }
 

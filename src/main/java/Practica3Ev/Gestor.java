@@ -66,16 +66,21 @@ public class Gestor {
 
     public Usuario login() {
         Scanner sc = new Scanner(System.in);
+        String email;
+        String password;
 
-        String email = sc.nextLine();
-        String password = sc.nextLine();
+        do {
+            System.out.println("Introduzca su correo electrónico: ");
+            email = sc.nextLine();
+            email = Validaciones.validar_correo(email);
+        } while (email.isEmpty());
 
 
-        System.out.println("Introduzca su correo electrónico: ");
-        email = Validaciones.validar_correo(email);
-
-        System.out.println("Introduzca su contraseña: ");
-        password = Validaciones.validar_contrasena(password);
+        do {
+            System.out.println("Introduzca su contraseña: ");
+            password = sc.nextLine();
+            password = Validaciones.validar_contrasena(password);
+        } while (password.isEmpty());
 
         try {
             for (Usuario a : listado_usuarios) {

@@ -73,8 +73,7 @@ public class Main {
                         System.out.println("Saliendo...");
                     }
                 } catch (InputMismatchException ex) {
-                    System.out.println("Introduce carácter válido");
-                    sc.next();
+                    System.out.println("Introduce carácter númerico");
                 }
 
             } while (opcionAdmin != 3);
@@ -96,9 +95,9 @@ public class Main {
                             """);
                     opcionEvento = sc.nextInt();
 
-                    if (opcionEvento == 3) {
+                    if (opcionEvento == 1) {
                         gestor_eventos.mostrar_eventos(miasistente);
-                    } else if (opcionEvento == 3) {
+                    } else if (opcionEvento == 2) {
                         gestor_eventos.informacion_reservas(miasistente);
                     } else if (opcionEvento == 3) {
                         System.out.println("Saliendo...");
@@ -106,17 +105,10 @@ public class Main {
                         System.out.println("Introduzca una opción válida.");
                     }
                 } catch (InputMismatchException ex) {
-                    System.out.println("erro");
-                    sc.next();
-                }
+                    System.out.println("Introduce un valor númerico");
 
+                }
             } while (opcionEvento != 3);
         }
-
-
-        {
-            System.out.println("Introduce un número.");
-        }
-
     }
 }
