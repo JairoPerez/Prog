@@ -1,8 +1,9 @@
 package Practica3Ev.clases;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Sala {
+public class Sala implements Serializable {
     String nombre;
     int capacidad_maxima;
     ArrayList<Butaca> lista_butacas;

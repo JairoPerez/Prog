@@ -1,8 +1,9 @@
 package Practica3Ev.clases;
 
+import java.io.Serializable;
 import java.util.Scanner;
 
-public class Butaca {
+public class Butaca implements Serializable {
     private String posicion;
     private int id;
     private boolean accesibilidad, disponible;

@@ -48,6 +48,14 @@ public class ValidacionesTest {
         String resultado = Validaciones.validar_fecha(input);
         assertEquals(input, resultado);
     }
+
+    @Test
+    public void Validar_asiento(){
+        String input = "b1";
+        String resultado = Validaciones.comprobar_asiento(input);
+        assertEquals(input, resultado);
+
+    }
 }
 
 

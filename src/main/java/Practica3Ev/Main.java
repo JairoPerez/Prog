@@ -1,6 +1,5 @@
 package Practica3Ev;
 
-import Practica3Ev.Excepciones.Myexception;
 import Practica3Ev.clases.Administrador;
 import Practica3Ev.clases.Usuario;
 

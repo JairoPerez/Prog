@@ -18,12 +18,16 @@ public class Validaciones {
             //Si el asiento tiene más de 2 carácteres da como no válido
             if (asiento.length() != 2) {
                 System.out.print("Asiento no válido, seleccione otro asiento por favor: ");
+                return "";
             } else if (asiento.equals("A1") || asiento.equals("A2") || asiento.equals("A3")) {
                 System.out.print("Asiento ocupado, seleccione otro asiento por favor: ");
+                return "";
             } else if (asiento.charAt(0) != 'A' && asiento.charAt(0) != 'B' && asiento.charAt(0) != 'C') {
                 System.out.print("Asiento no válido para esta función, seleccione otro asiento por favor: ");
+                return "";
             } else if ((asiento.charAt(1) > '6' || asiento.charAt(1) < '1')) {
                 System.out.print("Asiento no válido para esta función, seleccione otro asiento por favor: ");
+                return "";
             } else {
                 repetir = false;
             }
@@ -110,10 +114,10 @@ public class Validaciones {
             Pattern numeros = Pattern.compile("[0-9]+");
             Matcher matcher_numeros = numeros.matcher(contrasena);
 
-            Pattern secuencia = Pattern.compile("123|1234|12345+");
-            Matcher matcher_secuencia = secuencia.matcher(contrasena);
+            /*Pattern secuencia = Pattern.compile("[a-zA-Z]+");  //ESTO TIENE QUE SER 123
+            Matcher matcher_secuencia = secuencia.matcher(contrasena);*/
 
-            if (!matcher_secuencia.find() && (matcher_letras.find() && matcher_numeros.find()) == true) {
+            if ( /*!matcher_secuencia.find() && */(matcher_letras.find() && matcher_numeros.find()) == true) {
                 if (contrasena.length() >= 8 && contrasena.length() <= 20) {
                     salir = true;
                 } else {

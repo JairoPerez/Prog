@@ -1,11 +1,12 @@
 package Practica3Ev.clases;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public class Evento {
+public class Evento implements Serializable {
     String nombre;
     String invitado;
     String fecha_formateada;

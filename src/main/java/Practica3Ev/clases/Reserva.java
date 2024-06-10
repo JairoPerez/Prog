@@ -1,9 +1,10 @@
 package Practica3Ev.clases;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class Reserva {
+public class Reserva implements Serializable {
     String id;
     Asistente asistente;
     Evento evento;
@@ -75,5 +76,5 @@ public class Reserva {
         System.out.println("Butaca seleccionada: " + butaca.getPosicion());
         System.out.println("Fecha y hora de la reserva: " + fecha + " a las: " + hora + "\n");
     }
-    //TODO HACER METODOS COMPROBAR_DIPONIBILIDAD, RESERVAR_PLAZA Y GENERAR_TOKEN
+
 }
