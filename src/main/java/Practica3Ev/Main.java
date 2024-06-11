@@ -10,6 +10,8 @@ public class Main {
     public static void main(String[] args) {
 
         Gestor gestor_eventos = new Gestor();
+        GestorAdministrador ges_admin = new GestorAdministrador(gestor_eventos.getListado_eventos(), gestor_eventos.getListado_salas());
+        ges_admin.listarEventos();
         Usuario miasistente = null;
         Scanner sc = new Scanner(System.in);
         int opcionAdmin = 0;
@@ -59,16 +61,33 @@ public class Main {
                 try {
                     System.out.println("MENÚ PARA ADMINISTRADORES DE DELECTARE: ");
                     System.out.println("1. Gestionar eventos: ");
-                    System.out.println("2. Gestionar usuarios: ");
-                    System.out.println("3. Salir");
+                    System.out.println("2. Salir");
 
                     opcionAdmin = sc.nextInt();
 
                     if (opcionAdmin == 1) {
                         System.out.println("Menú para gestionar los eventos.");
+                        System.out.println("""
+                                |-------------------------------------|
+                                |# ADMINISTRADOR - GESTOR DE EVENTOS #|
+                                |-------------------------------------|
+                                |          1. Insertar evento         |
+                                |          2. Eliminar evento         |
+                                |          3. Listar eventos          |
+                                |-------------------------------------|
+                                   Seleccione una opción:
+                                     """);
+
+                        int opcion = sc.nextInt();
+
+                        if (opcion == 1) {
+                            ges_admin.insertarEvento();
+                        } else if (opcion == 2) {
+                            ges_admin.eliminarEvento();
+                        } else if (opcion == 3) {
+                            ges_admin.listarEventos();
+                        }
                     } else if (opcionAdmin == 2) {
-                        System.out.println("Menú para gestionar los usuarios: ");
-                    } else if (opcionAdmin == 3) {
                         System.out.println("Saliendo...");
                     }
                 } catch (InputMismatchException ex) {

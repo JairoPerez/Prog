@@ -186,7 +186,6 @@ public class Gestor {
             System.out.println("Error al añadir contenido al archivo");
         }
 
-
         return nuevoUsuario;
     }
 
@@ -209,119 +208,30 @@ public class Gestor {
             listado_salas[i] = new Sala("Sala " + i, misbutacas.size(), misbutacas, 100.0);
         }
 
-//        listado_usuarios.add(new Asistente("Jairo", "Pérez", "jairo.perez@gmail.com", "Hola123425", "49626489x", "645039666", "12-04-2000"));
-//        listado_usuarios.add(new Asistente("Pepe", "Pérez", "jairo.perez@gmail.com", "Hola123425", "49626489x", "645039666", "12-04-2000"));
-//        listado_usuarios.add(new Asistente("Ramon", "Pérez", "jairo.perez@gmail.com", "Hola123425", "49626489x", "645039666", "12-04-2000"));
+//        listado_usuarios.add(new Asistente("Jairo", "Pérez", "jairo.perez@gmail.com", "Hola1212", "49626489x", "645039666", "12-04-2000"));
+//        listado_usuarios.add(new Asistente("Pepe", "Pérez", "pepe@gmail.com", "Hola123425", "49626489x", "645039666", "12-04-2000"));
+//        listado_usuarios.add(new Asistente("Ramon", "Pérez", "johnny@gmail.com", "Hola123425", "49626489x", "645039666", "12-04-2000"));
 //        listado_usuarios.add(new Administrador("root", "root", "admin@admin.com", "root12345", "49626489x", "645039665", 1));
+//      volcarUsuario();
+        leerUsuario();
+
+
+//        listado_eventos.add(new Evento("El principito", "Mari Carmen Ortuño", listado_salas[0], LocalDate.of(2025, 5, 12), LocalTime.of(18, 0), 70, "Obra de teatro", listado_salas[0].total_butacas(), listado_usuarios));
+//        listado_eventos.add(new Evento("Final de la LEC", "Isabel Lafuente Garcia", listado_salas[1], LocalDate.of(2025, 6, 25), LocalTime.of(17, 0), 50, "Torneo de sports", listado_salas[1].total_butacas(), listado_usuarios));
+//        listado_eventos.add(new Evento("El cisne negro", "Victor Sarabia Simon", listado_salas[2], LocalDate.of(2025, 3, 13), LocalTime.of(19, 0), 30, "Película", listado_salas[2].total_butacas(), listado_usuarios));
+//        listado_eventos.add(new Evento("Romeo y Julieta", "Johnny Sins", listado_salas[3], LocalDate.of(2024, 7, 9), LocalTime.of(20, 0), 40, "Obra de teatro", listado_salas[3].total_butacas(), listado_usuarios));
+//        listado_eventos.add(new Evento("Bodas de sangre", "Lorca", listado_salas[4], LocalDate.of(2024, 10, 4), LocalTime.of(18, 30), 50, "Obra de teatro", listado_salas[4].total_butacas(), listado_usuarios));
+//      volcarEventos();
+        leerEventos();
+
+
+//        listado_reservas.add(new Reserva("1", listado_usuarios.get(0),listado_eventos.get(0),listado_salas[1].getLista_butacas().get(0),LocalDate.of(2025,12,2), LocalTime.of(12,30)));
+//        listado_reservas.add(new Reserva("2", listado_usuarios.get(1),listado_eventos.get(1),listado_salas[2].getLista_butacas().get(1),LocalDate.of(2025,11,2), LocalTime.of(13,30)));
+//        listado_reservas.add(new Reserva("3", listado_usuarios.get(2),listado_eventos.get(2),listado_salas[3].getLista_butacas().get(2),LocalDate.of(2025,10,2), LocalTime.of(14,30)));
+//        listado_reservas.add(new Reserva("4", listado_usuarios.get(3),listado_eventos.get(3),listado_salas[0].getLista_butacas().get(3),LocalDate.of(2025,9,2), LocalTime.of(15,30)));
 //
-//        //LEER INFORMACION DEL FICHERO Y ALMACENARLO EN EL ARCHIVO USUARIO.DAT
-        FileOutputStream fos = null;
-        ObjectOutputStream oos = null;
-//
-//        try {
-//            fos = new FileOutputStream("src/main/java/Practica3Ev/data/usuarios.dat");
-//            oos = new ObjectOutputStream(fos);
-//            for (Usuario u : listado_usuarios) {
-//                oos.writeObject(u);
-//            }
-//        } catch (FileNotFoundException ex) {
-//            System.out.println("No se ha encontrado el archivo.");
-//        } finally {
-//            oos.flush();
-//            oos.close();
-//            fos.close();
-//        }
-
-        try {
-            FileInputStream fis = new FileInputStream("src/main/java/Practica3Ev/data/usuarios.dat");
-            ObjectInputStream ois = new ObjectInputStream(fis);
-
-            while (true) {
-                Usuario u = (Usuario) ois.readObject();
-                listado_usuarios.add(u);
-            }
-        } catch (EOFException ex) {
-            System.out.println("Se han leído todos los usuarios");
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Hay un error en la clase");
-        }
-
-
-        //HAY QUE VER EL ARRAY DEL FINAL NS SI ESTA BIEN
-       /* listado_eventos.add(new Evento("El principito", "Mari Carmen Ortuño", listado_salas[0], LocalDate.of(2025, 5, 12), LocalTime.of(18, 0), 70, "Obra de teatro", listado_salas[0].total_butacas(), listado_usuarios));
-        listado_eventos.add(new Evento("Final de la LEC", "Isabel Lafuente Garcia", listado_salas[1], LocalDate.of(2025, 6, 25), LocalTime.of(17, 0), 50, "Torneo de sports", listado_salas[1].total_butacas(), listado_usuarios));
-        listado_eventos.add(new Evento("El cisne negro", "Victor Sarabia Simon", listado_salas[2], LocalDate.of(2025, 3, 13), LocalTime.of(19, 0), 30, "Película", listado_salas[2].total_butacas(), listado_usuarios));
-        listado_eventos.add(new Evento("Romeo y Julieta", "Johnny Sins", listado_salas[3], LocalDate.of(2024, 7, 9), LocalTime.of(20, 0), 40, "Obra de teatro", listado_salas[3].total_butacas(), listado_usuarios));
-        listado_eventos.add(new Evento("Bodas de sangre", "Lorca", listado_salas[4], LocalDate.of(2024, 10, 4), LocalTime.of(18, 30), 50, "Obra de teatro", listado_salas[4].total_butacas(), listado_usuarios));
-
-        //LEER INFORMACION DEL FICHERO Y ALMACENARLO EN EL ARCHIVO EVENTOS.DAT
-        try {
-            fos = new FileOutputStream("src/main/java/Practica3Ev/data/eventos.dat");
-            oos = new ObjectOutputStream(fos);
-            for (Evento e : listado_eventos) {
-                oos.writeObject(e);
-            }
-        } catch (FileNotFoundException ex) {
-            System.out.println("No se ha encontrado el archivo.");
-        } finally {
-            oos.flush();
-            oos.close();
-            fos.close();
-        }
-
-        */
-
-        try {
-            FileInputStream fis = new FileInputStream("src/main/java/Practica3Ev/data/eventos.dat");
-            ObjectInputStream ois = new ObjectInputStream(fis);
-
-            while (true) {
-                Evento e = (Evento) ois.readObject();
-                listado_eventos.add(e);
-            }
-        } catch (EOFException ex) {
-            System.out.println("Se han leído todos los eventos");
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Hay un error en la clase");
-        }
-
-
-        //NO ENTIENDO QUE RELLENAR EN LOS CONSTRUCTORES
-
-        /*listado_reservas.add(new Reserva("1",new Asistente(),new Evento(),new Butaca(),LocalDate.now(),LocalTime.now()));
-        listado_reservas.add(new Reserva("2",new Asistente(),new Evento(),new Butaca(),LocalDate.now(),LocalTime.now()));
-        listado_reservas.add(new Reserva("3",new Asistente(),new Evento(),new Butaca(),LocalDate.now(),LocalTime.now()));
-        listado_reservas.add(new Reserva("4",new Asistente(),new Evento(),new Butaca(),LocalDate.now(),LocalTime.now()));
-
-
-        //LEER INFORMACION DEL FICHERO Y ALMACENARLO EN EL ARCHIVO EVENTOS.DAT
-        try {
-            fos = new FileOutputStream("src/main/java/Practica3Ev/data/reservas.dat");
-            oos = new ObjectOutputStream(fos);
-            for (Reserva r : listado_reservas) {
-                oos.writeObject(r);
-            }
-        } catch (FileNotFoundException ex) {
-            System.out.println("No se ha encontrado el archivo.");
-        } finally {
-            oos.flush();
-            oos.close();
-            fos.close();
-        }
-*/
-        try {
-            FileInputStream fis = new FileInputStream("src/main/java/Practica3Ev/data/reservas.dat");
-            ObjectInputStream ois = new ObjectInputStream(fis);
-
-            while (true) {
-                Reserva r = (Reserva) ois.readObject();
-                listado_reservas.add(r);
-            }
-        } catch (EOFException ex) {
-            System.out.println("Se han leído todas las reservas");
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Hay un error en la clase");
-        }
+//      volcarReservas();
+        leerReservas();
 
 
         try {
@@ -344,12 +254,6 @@ public class Gestor {
             ArrayList<Usuario> asistentes_bodas_de_sangre = new ArrayList<>();
             asistentes_bodas_de_sangre.add(listado_usuarios.get(0));
             asistentes_bodas_de_sangre.add(listado_usuarios.get(2));
-
-            listado_eventos.add(new Evento("El principito", "Mari Carmen Ortuño", listado_salas[0], LocalDate.of(2025, 5, 12), LocalTime.of(18, 0), 70, "Obra de teatro", listado_salas[0].total_butacas(), asistentes_principito));
-            listado_eventos.add(new Evento("Final de la LEC", "Isabel Lafuente Garcia", listado_salas[1], LocalDate.of(2025, 6, 25), LocalTime.of(17, 0), 50, "Torneo de sports", listado_salas[1].total_butacas(), asistentes_final_lec));
-            listado_eventos.add(new Evento("El cisne negro", "Victor Sarabia Simon", listado_salas[2], LocalDate.of(2025, 3, 13), LocalTime.of(19, 0), 30, "Película", listado_salas[2].total_butacas(), asistentes_cisneNegro));
-            listado_eventos.add(new Evento("Romeo y Julieta", "Johnny Sins", listado_salas[3], LocalDate.of(2024, 7, 9), LocalTime.of(20, 0), 40, "Obra de teatro", listado_salas[3].total_butacas(), asistentes_romeo_julieta));
-            listado_eventos.add(new Evento("Bodas de sangre", "Lorca", listado_salas[4], LocalDate.of(2024, 10, 4), LocalTime.of(18, 30), 50, "Obra de teatro", listado_salas[4].total_butacas(), asistentes_bodas_de_sangre));
 
         } catch (ArrayIndexOutOfBoundsException ex) {
             System.out.println("No hay ningun usuario listado.");
@@ -474,19 +378,146 @@ public class Gestor {
 
     public void informacion_reservas(Usuario asistente) {
 
+        for (Reserva r : listado_reservas) {
+            r.mostrar_info_reserva();
+        }
+
+        listado_reservas.add(new Reserva("5", listado_usuarios.get(1), listado_eventos.get(2), listado_salas[1].getLista_butacas().get(3), LocalDate.of(2025, 7, 15), LocalTime.of(15, 00)));
+
         try {
             if (!listado_reservas.isEmpty()) {
                 for (Reserva r : listado_reservas) {
-                    if (r.getAsistente().getEmail().equals(asistente.getEmail())) {
+                    if (r.getAsistente().equals(asistente)) {
                         r.mostrar_info_reserva();
-                    } else {
-                        throw new ReservaInexistenteException();
                     }
                 }
             }
+            throw new ReservaInexistenteException();
         } catch (ReservaInexistenteException ex) {
             System.out.println(ex.getMessage());
         }
+
+
+    }
+
+    public void volcarUsuarios() throws IOException {
+        FileOutputStream fos = null;
+        ObjectOutputStream oos = null;
+
+        try {
+            fos = new FileOutputStream("src/main/java/Practica3Ev/data/usuarios.dat");
+            oos = new ObjectOutputStream(fos);
+            for (Usuario u : listado_usuarios) {
+                oos.writeObject(u);
+            }
+        } catch (FileNotFoundException ex) {
+            System.out.println("No se ha encontrado el archivo.");
+        } finally {
+            oos.flush();
+            oos.close();
+            fos.close();
+        }
+    }
+
+    public void volcarEventos() throws IOException {
+        FileOutputStream fos = null;
+        ObjectOutputStream oos = null;
+        try {
+            fos = new FileOutputStream("src/main/java/Practica3Ev/data/eventos.dat");
+            oos = new ObjectOutputStream(fos);
+            for (Evento e : listado_eventos) {
+                oos.writeObject(e);
+            }
+        } catch (FileNotFoundException ex) {
+            System.out.println("No se ha encontrado el archivo.");
+        } finally {
+            oos.flush();
+            oos.close();
+            fos.close();
+        }
+    }
+
+    public void volcarReservas() throws IOException {
+        FileOutputStream fos = null;
+        ObjectOutputStream oos = null;
+        try {
+            fos = new FileOutputStream("src/main/java/Practica3Ev/data/reservas.dat");
+            oos = new ObjectOutputStream(fos);
+            for (Reserva r : listado_reservas) {
+                oos.writeObject(r);
+            }
+        } catch (FileNotFoundException ex) {
+            System.out.println("No se ha encontrado el archivo.");
+        } finally {
+            oos.flush();
+            oos.close();
+            fos.close();
+        }
+    }
+
+    public void leerUsuario() throws IOException {
+        FileInputStream fis = null;
+        ObjectInputStream ois = null;
+
+        try {
+            fis = new FileInputStream("src/main/java/Practica3Ev/data/usuarios.dat");
+            ois = new ObjectInputStream(fis);
+
+            while (true) {
+                Usuario u = (Usuario) ois.readObject();
+                listado_usuarios.add(u);
+            }
+        } catch (EOFException ex) {
+            System.out.println("Se han leído todos las usuarios");
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Hay un error en la clase");
+        } finally {
+            fis.close();
+            ois.close();
+        }
+    }
+
+    public void leerEventos() throws IOException {
+        FileInputStream fis = null;
+        ObjectInputStream ois = null;
+        try {
+            fis = new FileInputStream("src/main/java/Practica3Ev/data/eventos.dat");
+            ois = new ObjectInputStream(fis);
+
+            while (true) {
+                Evento e = (Evento) ois.readObject();
+                listado_eventos.add(e);
+            }
+        } catch (EOFException ex) {
+            System.out.println("Se han leído todos los eventos");
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Hay un error en la clase");
+        } finally {
+            fis.close();
+            ois.close();
+        }
+    }
+
+    public void leerReservas() throws IOException {
+        FileInputStream fis = null;
+        ObjectInputStream ois = null;
+        try {
+            fis = new FileInputStream("src/main/java/Practica3Ev/data/reservas.dat");
+            ois = new ObjectInputStream(fis);
+
+            while (true) {
+                Reserva r = (Reserva) ois.readObject();
+                listado_reservas.add(r);
+            }
+        } catch (EOFException ex) {
+            System.out.println("Se han leído todas las reservas");
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Hay un error en la clase");
+        } finally {
+            fis.close();
+            ois.close();
+        }
+
     }
 }
 

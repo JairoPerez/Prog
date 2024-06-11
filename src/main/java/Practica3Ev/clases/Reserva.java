@@ -6,13 +6,13 @@ import java.time.LocalTime;
 
 public class Reserva implements Serializable {
     String id;
-    Asistente asistente;
+    Usuario asistente;
     Evento evento;
     Butaca butaca;
     LocalDate fecha;
     LocalTime hora;
 
-    public Reserva(String id, Asistente asistente, Evento evento, Butaca butaca, LocalDate fecha, LocalTime hora) {
+    public Reserva(String id, Usuario asistente, Evento evento, Butaca butaca, LocalDate fecha, LocalTime hora) {
         this.id = id;
         this.asistente = asistente;
         this.evento = evento;
@@ -29,7 +29,7 @@ public class Reserva implements Serializable {
         this.id = id;
     }
 
-    public Asistente getAsistente() {
+    public Usuario getAsistente() {
         return asistente;
     }
 

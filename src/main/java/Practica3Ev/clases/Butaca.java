@@ -58,19 +58,4 @@ public class Butaca implements Serializable {
                 ", disponible=" + disponible +
                 '}';
     }
-
-
-    //TODO CREAR METODOS OCUPARBUTACA Y DESOCUPARBUTACA
-//    public boolean ocupar_butaca() {
-//
-//        if (disponible == true) {
-//            System.out.println("Asiento libre");
-//            return true;
-//        } else {
-//            System.out.println("Asiento ocupado, pruebe con otro:");
-//            return false;
-//        }
-//
-//
-//    }
 }

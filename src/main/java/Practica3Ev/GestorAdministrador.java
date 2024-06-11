@@ -2,10 +2,12 @@ package Practica3Ev;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import Practica3Ev.clases.Asistente;
 import Practica3Ev.clases.Evento;
 import Practica3Ev.clases.Sala;
 import Practica3Ev.clases.Usuario;
@@ -14,15 +16,23 @@ import javax.xml.stream.FactoryConfigurationError;
 
 public class GestorAdministrador {
     Scanner sc = new Scanner(System.in);
+    ArrayList<Evento> listado_eventos;
+    Sala[] listado_salas;
 
-    public void insertarEvento(ArrayList<Evento> listado_eventos, Sala[] listado_salas, ArrayList<Usuario> asistentes) {
+
+    GestorAdministrador(ArrayList<Evento> lista_eventos,Sala[] listado_salas){
+        this.listado_eventos=lista_eventos;
+        this.listado_salas = listado_salas;
+    }
+
+    public void insertarEvento() {
         boolean salir = false;
         int numSala;
         String nombreEvento;
         String invitado;
         Sala sala = null;
         String fechaEvento;
-        String horaEvento;
+        String horaEvento = null;
         String precioEvento;
         String tipoEvento;
 
@@ -51,11 +61,14 @@ public class GestorAdministrador {
                     }
                 } catch (InputMismatchException ex) {
                     System.out.println("Tiene que introducir un valor númerico en un rango de 1-5");
-                    salir = false;
+                    sc.next();
+                } catch (ArrayIndexOutOfBoundsException ex){
+                    System.out.println("Introduce un número dentro del rango 1-5");
                 }
 
-            } while (sala.equals(""));
+            } while (sala==null);
 
+            sc.nextLine();
 
             do {
                 System.out.println("Seleccione fecha para el evento");
@@ -63,11 +76,14 @@ public class GestorAdministrador {
                 fechaEvento = Validaciones.validar_fecha(fechaEvento);
             } while (fechaEvento.isEmpty());
 
-            do {
-                System.out.println("Seleccione hora para el evento");
-                horaEvento = sc.nextLine();   //VALIDAR HORA CREAR VALIDACION
-                horaEvento = Validaciones.validar_fecha(horaEvento);
-            } while (horaEvento.isEmpty());
+            System.out.println("Seleccione hora para el evento");
+            sc.nextLine();
+            
+//            do {
+//                System.out.println("Seleccione hora para el evento");
+//                horaEvento = sc.nextLine();   //VALIDAR HORA CREAR VALIDACION
+//                horaEvento = Validaciones.validar_hora(horaEvento);
+//            } while (horaEvento.isEmpty());
 
             do {
                 System.out.println("Introduzca precio del evento");
@@ -81,17 +97,18 @@ public class GestorAdministrador {
                 tipoEvento = Validaciones.validar_nombre(tipoEvento);
             } while (tipoEvento.isEmpty());
 
+            fechaEvento = LocalDate.EPOCH.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
             LocalDate fecha = LocalDate.parse(fechaEvento);
-            LocalTime hora = LocalTime.parse(horaEvento);
             double precio = Double.parseDouble(precioEvento);
 
-            listado_eventos.add(new Evento(nombreEvento, invitado, sala, fecha, hora, precio, tipoEvento, sala.getCapacidad_maxima(), null));
+            listado_eventos.add(new Evento(nombreEvento, invitado, sala, fecha, LocalTime.of(12, 54), precio, tipoEvento, sala.getCapacidad_maxima(), new ArrayList<Usuario>()));
 
         } while (salir);
 
     }
 
-    public void eliminarEvento(ArrayList<Evento> listado_eventos) {
+    public void eliminarEvento() {
         //NS COMO PONER EL EVENTO QUE SELECCIONA EL USUARIO
         System.out.println("¿Que evento quieres eliminar?");
         int eventoEliminar = sc.nextInt();
@@ -108,9 +125,9 @@ public class GestorAdministrador {
         }
     }
 
-    public void listarEventos(ArrayList<Evento> listado_eventos) {
+    public void listarEventos() {
         for (Evento e : listado_eventos) {
-            System.out.println(e);
+            e.mostrar_info_evento();
         }
     }
 
