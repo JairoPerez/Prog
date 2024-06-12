@@ -111,12 +111,11 @@ public class GestorAdministrador {
     public void eliminarEvento() {
         //NS COMO PONER EL EVENTO QUE SELECCIONA EL USUARIO
         int eventoEliminar = 0;
-        boolean salir = false;
 
         do {
             try {
-                for (int i = 1; i < listado_eventos.size(); i++) {
-                    System.out.println(i + ". " + listado_eventos.get(i).getNombre() + ".");
+                for (int i = 0; i < listado_eventos.size(); i++) {
+                    System.out.println(i + 1 + ". " + listado_eventos.get(i).getNombre() + ".");
                 }
                 System.out.println("¿Que evento quieres eliminar?");
                 eventoEliminar = sc.nextInt();
@@ -133,7 +132,7 @@ public class GestorAdministrador {
                 System.out.println("Introduce un carácter númerico");
                 sc.next();
                 break;
-            }catch (ArrayIndexOutOfBoundsException ex){
+            } catch (ArrayIndexOutOfBoundsException ex) {
                 System.out.println("Introduce un número de evento válido");
                 break;
             }
@@ -147,7 +146,34 @@ public class GestorAdministrador {
     }
 
     public void listarEvento() {
-        //INTENTAR COGER EL EVENTO DEL ID QUE ME PIDA EL USUARIO
+        int eventoEliminar = 0;
+        boolean salir = true;
+
+        do {
+            try {
+                for (int i = 0; i < listado_eventos.size(); i++) {
+                    System.out.println(i + 1 + ". " + listado_eventos.get(i).getNombre() + ".");
+                }
+                System.out.println("¿De que evento quieres informarte?");
+                eventoEliminar = sc.nextInt();
+
+                if (eventoEliminar >= 1 && eventoEliminar <= listado_eventos.size()) {
+                    listado_eventos.get(eventoEliminar - 1).mostrar_info_evento();
+                    salir=true;
+                } else {
+                    System.out.println("Introduce un valor válido");
+                    salir=false;
+
+                }
+            } catch (InputMismatchException ex) {
+                System.out.println("Introduce un valor númerico");
+                salir=false;
+            } catch (ArrayIndexOutOfBoundsException ex) {
+                System.out.println("Introduce un número de evento válido");
+                salir=false;
+            }
+        } while (!salir);
     }
+
 
 }

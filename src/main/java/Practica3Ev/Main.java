@@ -12,11 +12,13 @@ public class Main {
 
         Gestor gestor_eventos = new Gestor();
         GestorAdministrador ges_admin = new GestorAdministrador(gestor_eventos.getListado_eventos(), gestor_eventos.getListado_salas());
-        ges_admin.listarEventos();
+        ;
         Usuario miasistente = null;
         Scanner sc = new Scanner(System.in);
         int opcionAdmin = 0;
         int opcionEvento = 0;
+        int opcionMenu;
+        int opcion = 0;
 
 
         do {
@@ -32,9 +34,9 @@ public class Main {
                            Seleccione una opción:
                              """);
 
-                int opcion = sc.nextInt();
+                opcionMenu = sc.nextInt();
 
-                switch (opcion) {
+                switch (opcionMenu) {
                     case 1:
 
                         miasistente = gestor_eventos.login();
@@ -59,49 +61,61 @@ public class Main {
 
         if (miasistente instanceof Administrador) {
 
-
             do {
                 System.out.println("MENÚ PARA ADMINISTRADORES DE DELECTARE: ");
                 System.out.println("1. Gestionar eventos: ");
                 System.out.println("2. Salir");
+
                 try {
                     opcionAdmin = sc.nextInt();
-
                     if (opcionAdmin == 1) {
-                        System.out.println("Menú para gestionar los eventos.");
-                        System.out.println("""
-                                |-------------------------------------|
-                                |# ADMINISTRADOR - GESTOR DE EVENTOS #|
-                                |-------------------------------------|
-                                |          1. Insertar evento         |
-                                |          2. Eliminar evento         |
-                                |          3. Listar eventos          |
-                                |-------------------------------------|
-                                   Seleccione una opción:
-                                     """);
+                        do {
+                            System.out.println("Menú para gestionar los eventos.");
+                            System.out.println("""
+                                    |-------------------------------------|
+                                    |# ADMINISTRADOR - GESTOR DE EVENTOS #|
+                                    |-------------------------------------|
+                                    |          1. Insertar evento         |
+                                    |          2. Eliminar evento         |
+                                    |          3. Listar eventos          |
+                                    |          4. Mostrar información     |
+                                    |          5. Salir                   |
+                                    |-------------------------------------|
+                                       Seleccione una opción:
+                                         """);
 
-                        int opcion = sc.nextInt();
-
-                        try {
-                            if (opcion == 1) {
-                                ges_admin.insertarEvento();
-                                gestor_eventos.volcarEventos();
-                            } else if (opcion == 2) {
-                                ges_admin.eliminarEvento();
-                                gestor_eventos.volcarEventos();
-                            } else if (opcion == 3) {
-                                ges_admin.listarEventos();
+                            try {
+                                opcion = sc.nextInt();
+                                if (opcion == 1) {
+                                    ges_admin.insertarEvento();
+                                    gestor_eventos.volcarEventos();
+                                } else if (opcion == 2) {
+                                    ges_admin.eliminarEvento();
+                                    gestor_eventos.volcarEventos();
+                                } else if (opcion == 3) {
+                                    ges_admin.listarEventos();
+                                } else if (opcion == 4) {
+                                    ges_admin.listarEvento();
+                                }
+                            } catch (InputMismatchException ex) {
+                                System.out.println("Introduce un carácter numérico");
+                                sc.next();
+                            } catch (IOException ex) {
+                                System.out.println("ERROR DE ENTRADA/SALIDA");
                             }
-                        }catch (IOException ex){
-                            System.out.println("ERROR ENTRADA/SALIDA");
-                        }
+                        } while (opcion != 5);
+
+
                     } else if (opcionAdmin == 2) {
                         System.out.println("Saliendo...");
+                        System.exit(0);
+                        break;
                     } else {
                         System.out.println("Introduzca una opción válida.");
                     }
                 } catch (InputMismatchException ex) {
                     System.out.println("Introduce carácter númerico");
+                    sc.next();
                 }
             } while (opcionAdmin != 2);
 
