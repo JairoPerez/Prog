@@ -3,6 +3,7 @@ package Practica3Ev;
 import Practica3Ev.clases.Administrador;
 import Practica3Ev.clases.Usuario;
 
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -57,12 +58,13 @@ public class Main {
 
 
         if (miasistente instanceof Administrador) {
-            do {
-                try {
-                    System.out.println("MENÚ PARA ADMINISTRADORES DE DELECTARE: ");
-                    System.out.println("1. Gestionar eventos: ");
-                    System.out.println("2. Salir");
 
+
+            do {
+                System.out.println("MENÚ PARA ADMINISTRADORES DE DELECTARE: ");
+                System.out.println("1. Gestionar eventos: ");
+                System.out.println("2. Salir");
+                try {
                     opcionAdmin = sc.nextInt();
 
                     if (opcionAdmin == 1) {
@@ -80,21 +82,28 @@ public class Main {
 
                         int opcion = sc.nextInt();
 
-                        if (opcion == 1) {
-                            ges_admin.insertarEvento();
-                        } else if (opcion == 2) {
-                            ges_admin.eliminarEvento();
-                        } else if (opcion == 3) {
-                            ges_admin.listarEventos();
+                        try {
+                            if (opcion == 1) {
+                                ges_admin.insertarEvento();
+                                gestor_eventos.volcarEventos();
+                            } else if (opcion == 2) {
+                                ges_admin.eliminarEvento();
+                                gestor_eventos.volcarEventos();
+                            } else if (opcion == 3) {
+                                ges_admin.listarEventos();
+                            }
+                        }catch (IOException ex){
+                            System.out.println("ERROR ENTRADA/SALIDA");
                         }
                     } else if (opcionAdmin == 2) {
                         System.out.println("Saliendo...");
+                    } else {
+                        System.out.println("Introduzca una opción válida.");
                     }
                 } catch (InputMismatchException ex) {
                     System.out.println("Introduce carácter númerico");
                 }
-
-            } while (opcionAdmin != 3);
+            } while (opcionAdmin != 2);
 
         } else {
 

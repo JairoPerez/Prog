@@ -20,8 +20,8 @@ public class GestorAdministrador {
     Sala[] listado_salas;
 
 
-    GestorAdministrador(ArrayList<Evento> lista_eventos,Sala[] listado_salas){
-        this.listado_eventos=lista_eventos;
+    GestorAdministrador(ArrayList<Evento> lista_eventos, Sala[] listado_salas) {
+        this.listado_eventos = lista_eventos;
         this.listado_salas = listado_salas;
     }
 
@@ -62,11 +62,11 @@ public class GestorAdministrador {
                 } catch (InputMismatchException ex) {
                     System.out.println("Tiene que introducir un valor númerico en un rango de 1-5");
                     sc.next();
-                } catch (ArrayIndexOutOfBoundsException ex){
+                } catch (ArrayIndexOutOfBoundsException ex) {
                     System.out.println("Introduce un número dentro del rango 1-5");
                 }
 
-            } while (sala==null);
+            } while (sala == null);
 
             sc.nextLine();
 
@@ -78,7 +78,7 @@ public class GestorAdministrador {
 
             System.out.println("Seleccione hora para el evento");
             sc.nextLine();
-            
+
 //            do {
 //                System.out.println("Seleccione hora para el evento");
 //                horaEvento = sc.nextLine();   //VALIDAR HORA CREAR VALIDACION
@@ -110,19 +110,34 @@ public class GestorAdministrador {
 
     public void eliminarEvento() {
         //NS COMO PONER EL EVENTO QUE SELECCIONA EL USUARIO
-        System.out.println("¿Que evento quieres eliminar?");
-        int eventoEliminar = sc.nextInt();
+        int eventoEliminar = 0;
+        boolean salir = false;
 
-        try {
-            for (int i = 1; i < listado_eventos.size() - 1; i++) {
-                System.out.println(i + ". " + listado_eventos.get(i).getNombre()+".");
-                if (eventoEliminar != i) {
-                    System.out.println("Introduce un número de evento válido");
+        do {
+            try {
+                for (int i = 1; i < listado_eventos.size(); i++) {
+                    System.out.println(i + ". " + listado_eventos.get(i).getNombre() + ".");
                 }
+                System.out.println("¿Que evento quieres eliminar?");
+                eventoEliminar = sc.nextInt();
+
+                if (eventoEliminar >= 1 && eventoEliminar <= listado_eventos.size()) {
+                    listado_eventos.remove(eventoEliminar - 1);
+                    System.out.println("Evento eliminado correctamente");
+                    break;
+                } else {
+                    System.out.println("Introduce un número válido");
+                    break;
+                }
+            } catch (InputMismatchException ex) {
+                System.out.println("Introduce un carácter númerico");
+                sc.next();
+                break;
+            }catch (ArrayIndexOutOfBoundsException ex){
+                System.out.println("Introduce un número de evento válido");
+                break;
             }
-        } catch (InputMismatchException ex) {
-            System.out.println("Introduce un carácter númerico");
-        }
+        } while (eventoEliminar != listado_eventos.size());
     }
 
     public void listarEventos() {
