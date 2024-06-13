@@ -72,14 +72,14 @@ public class Gestor {
         do {
             System.out.println("Introduzca su correo electrónico: ");
             email = sc.nextLine();
-            email = Validaciones.validar_correo(email);
+            email = Validaciones.validarCorreo(email);
         } while (email.isEmpty());
 
 
         do {
             System.out.println("Introduzca su contraseña: ");
             password = sc.nextLine();
-            password = Validaciones.validar_contrasena(password);
+            password = Validaciones.validarContrasena(password);
         } while (password.isEmpty());
 
         try {
@@ -107,27 +107,26 @@ public class Gestor {
         String telefono;
         String password;
         String fecha_nacimiento;
-        boolean esAdmin = false;
         boolean salir = false;
 
         do {
             do {
                 System.out.println("Introduzca su nombre: ");
                 nombre = sc.nextLine();
-                nombre = Validaciones.validar_nombre(nombre);
+                nombre = Validaciones.validarNombre(nombre);
 
             } while (nombre.isEmpty());
 
             do {
                 System.out.println("Introduzca sus apellidos: ");
                 apellidos = sc.nextLine();
-                apellidos = Validaciones.validar_nombre(apellidos);
+                apellidos = Validaciones.validarNombre(apellidos);
             } while (apellidos.isEmpty());
 
             do {
                 System.out.println("Introduzca su correo electrónico: ");
                 email = sc.nextLine();
-                email = Validaciones.validar_correo(email);
+                email = Validaciones.validarCorreo(email);
             } while (email.isEmpty());
 
             try {
@@ -146,28 +145,28 @@ public class Gestor {
         do {
             System.out.println("Introduzca su contraseña: ");
             password = sc.nextLine();
-            password = Validaciones.validar_contrasena(password);
+            password = Validaciones.validarContrasena(password);
         } while (password.isEmpty());
 
 
         do {
             System.out.println("Introduzca su DNI: ");
             dni = sc.nextLine();
-            dni = Validaciones.validar_dni(dni);
+            dni = Validaciones.validarDni(dni);
         } while (dni.isEmpty());
 
 
         do {
             System.out.println("Introduzca su número de telefono: ");
             telefono = sc.nextLine();
-            telefono = Validaciones.validar_telefono(telefono);
+            telefono = Validaciones.validarTelefono(telefono);
         } while (telefono.isEmpty());
 
 
         do {
             System.out.println("Introduzca su fecha de nacimiento: ");
             fecha_nacimiento = sc.nextLine();
-            fecha_nacimiento = Validaciones.validar_fecha(fecha_nacimiento);
+            fecha_nacimiento = Validaciones.validarFecha(fecha_nacimiento);
         } while (fecha_nacimiento.isEmpty());
 
 
@@ -201,8 +200,8 @@ public class Gestor {
             for (char fila = 'A'; fila < 'A' + (int) (Math.random() * 6) + 3; fila++) {
                 for (int columna = 1; columna < 6; columna++) {
                     identificador++;
-                    String pos = fila + "" + columna;
-                    misbutacas.add(new Butaca(pos, identificador, false, true));
+                    String posicion = fila + "" + columna;
+                    misbutacas.add(new Butaca(posicion, identificador, false, true));
                 }
             }
             listado_salas[i] = new Sala("Sala " + i, misbutacas.size(), misbutacas, 100.0);
@@ -328,7 +327,7 @@ public class Gestor {
     }
 
     public String hacer_reserva(Evento evento, Usuario asistente) {
-        String token = Validaciones.crear_token();
+        String token = Validaciones.crearToken();
         String asiento;
         Butaca butaca = null;
         boolean salir = false;
@@ -340,7 +339,7 @@ public class Gestor {
                 evento.mostrar_butacas();
                 System.out.println();
                 asiento = sc.nextLine();
-                asiento = Validaciones.comprobar_asiento(asiento);
+                asiento = Validaciones.comprobarAsiento(asiento);
             } while (asiento.isEmpty());
 
 
@@ -365,7 +364,7 @@ public class Gestor {
 //            System.out.println("Precio del evento: " + evento.getPrecio());
 
             System.out.println("\n¿De que manera quiere efectuar el pago?");
-            Validaciones.metodo_pago();
+            Validaciones.metodoPago();
 
         } while (!salir);
 

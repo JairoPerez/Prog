@@ -2,14 +2,14 @@ package Practica3Ev;
 
 import java.math.BigInteger;
 import java.time.LocalDate;
-import java.util.InputMismatchException;
+import java.time.LocalTime;
 import java.util.Scanner;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Validaciones {
-    public static String comprobar_asiento(String asiento) {
+    public static String comprobarAsiento(String asiento) {
         boolean repetir = true;
 
         do {
@@ -35,7 +35,7 @@ public class Validaciones {
         return asiento;
     }
 
-    public static String validar_nombre(String nombre) {
+    public static String validarNombre(String nombre) {
         char letra;
         boolean terminar = true;
 
@@ -53,7 +53,7 @@ public class Validaciones {
         return nombre;
     }
 
-    public static String validar_correo(String correo) {
+    public static String validarCorreo(String correo) {
         String[] entre_arroba;
         String[] despues_punto;
 
@@ -103,7 +103,7 @@ public class Validaciones {
         return correo;
     }
 
-    public static String validar_contrasena(String contrasena) {
+    public static String validarContrasena(String contrasena) {
         boolean salir = false;
 
 
@@ -133,7 +133,7 @@ public class Validaciones {
         return contrasena;
     }
 
-    public static String validar_telefono(String numero_telefono) {
+    public static String validarTelefono(String numero_telefono) {
         char numero;
         boolean valido = true;
 
@@ -164,7 +164,7 @@ public class Validaciones {
         return numero_telefono;
     }
 
-    public static String validar_dni(String dni) {
+    public static String validarDni(String dni) {
         String numeros_dni, letra_dni, letras_validas = "TRWAGMYFPDXBNJZSQVHLCKE";
         int valor;
         char total;
@@ -220,13 +220,13 @@ public class Validaciones {
         return dni;
     }
 
-    public static String crear_token() {
+    public static String crearToken() {
         UUID token = UUID.randomUUID();
         System.out.println(token.toString());
         return token.toString();
     }
 
-    public static String validar_fecha(String fecha) {
+    public static String validarFecha(String fecha) {
         String[] fecha_partes;
         LocalDate fecha_validada = null;
         LocalDate fecha_mayor;
@@ -290,149 +290,253 @@ public class Validaciones {
         }
         try {
             boolean b = fecha == fecha_validada.toString();
-        }catch (NullPointerException ex){
+        } catch (NullPointerException ex) {
             System.out.println("Ha introducido una fecha incorrecta");
             return "";
         }
         return fecha;
     }
 
-    public static String metodo_pago() {
-        Scanner sc = new Scanner(System.in);
-        String opcion, pago, iban, iban_convertido, letras_iban, numeros_iban, cuatro_digitos, numeros_iban_pasado;
-        char letras, numeros;
-        boolean valido = true;
-        boolean iban_mal = true;
-        BigInteger resultado;
+    public static String validarFechaEvento(String fecha) {
+        String[] fecha_partes;
+        LocalDate fecha_validada = null;
+        LocalDate fecha_mayor;
+        int dia;
+        int mes;
+        int anno;
+        boolean salir = false;
+        boolean volver = false;
 
-        do {
-            System.out.println("""
-                    1. Transferencia bancaria
-                    2. Paypal
-                    3. Bizum
-                    """);
-            opcion = sc.nextLine();
+        fecha = fecha.replace("/", "-");
+        fecha = fecha.replace(" ", "-");
 
-            if (!(opcion.equals("1")) && !(opcion.equals("2")) && !(opcion.equals("3"))) {
-                System.out.println("Opción no válida, vuelva a escoger la opción que desea: ");
+        Pattern pattern = Pattern.compile("^[0-9]{1,2}-[0-9]{1,2}-[0-9]{4}$");
+        Matcher matcher = pattern.matcher(fecha);
+
+        if (matcher.find()) {
+            fecha_partes = fecha.split("-");
+
+            dia = Integer.parseInt(fecha_partes[0]);
+            mes = Integer.parseInt(fecha_partes[1]);
+            anno = Integer.parseInt(fecha_partes[2]);
+
+            if (mes > 12 || mes < 1) {
+                System.out.println("Fecha inapropiada vuelva a introducirla, por favor: ");
+                return "";
+            } else if (mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8 || mes == 10 || mes == 12) {
+                if (dia < 1 || dia > 31) {
+                    System.out.println("Fecha no válida, vuelva a introducirla, por favor: ");
+                    return "";
+                }
+
+            } else if (mes == 4 || mes == 6 || mes == 9 || mes == 11) {
+                if (dia < 1 || dia > 30) {
+                    System.out.println("Fecha no válida, vuelva a introducirla, por favor: ");
+                    return "";
+                }
+
+            } else {
+                if ((anno % 4 == 0 || anno % 400 == 0) && anno % 100 != 0) {
+                    if (dia < 1 || dia > 29) {
+                        System.out.println("Fecha inapropiada vuelva a introducirla, por favor: ");
+                        return "";
+                    }
+                } else {
+                    if (dia < 1 || dia > 28) {
+                        System.out.println("Fecha no válida, vuelva a introducirla, por favor: ");
+                        return "";
+                    }
+                }
             }
 
-        } while (!(opcion.equals("1")) && !(opcion.equals("2")) && !(opcion.equals("3")));
+            fecha_validada = LocalDate.of(anno, mes, dia);
 
-        switch (opcion) {
-            case "1":
-                System.out.println("\nIntroduzca su numero de cuenta bancaria: ");
-                do {
-                    do {
-                        iban = sc.nextLine();
-                        iban = iban.toUpperCase();
-                        iban = iban.replace(" ", "");
-                        if (iban.length() != 24) {
-                            System.out.println("Numero de cuenta no válido, vuelva a introducirlo por favor: ");
-                        } else {
-                            letras_iban = iban.substring(0, 2);
-                            numeros_iban = iban.substring(2);
-
-                            for (int i = 0; i < letras_iban.length(); i++) {
-                                letras = letras_iban.charAt(i);
-                                if (letras != 'E' && letras != 'S') {
-                                    System.out.println("Cuenta bancaria no encontrada, vuelva a introducirla: ");
-                                    iban_mal = true;
-                                    break;
-                                }
-                            }
-
-                            for (int j = 0; j < numeros_iban.length(); j++) {
-                                numeros = numeros_iban.charAt(j);
-                                if (numeros < '0' || numeros > '9') {
-                                    System.out.println("Cuenta bancaria no encontrada, vuelva a introducirla: ");
-                                    iban_mal = true;
-                                    break;
-                                } else {
-                                    iban_mal = false;
-                                }
-                            }
-                        }
-                    } while (iban_mal);
-
-                    cuatro_digitos = iban.substring(0, 4);
-                    numeros_iban_pasado = iban.substring(4);
-
-                    iban_convertido = numeros_iban_pasado + cuatro_digitos;
-                    iban_convertido = iban_convertido.replace("E", "14");
-                    iban_convertido = iban_convertido.replace("S", "28");
-
-
-                    BigInteger iban_numero = new BigInteger(iban_convertido);
-                    resultado = iban_numero.mod(BigInteger.valueOf((97)));
-
-
-                    //Primero validamos que los dos primeros carateres sean letras y lo demás números
-
-                    /*Después reemplazamos los 4 primeros dígitos del IBAN al final y convertimos las letras a su valor numérico,
-                     *hacemos una división del IBAN convertido a números entre 97 y si el resto da 1 el IBAN es válido */
-
-                    if (!String.valueOf(resultado).equals("1")) {
-                        System.out.println("Cuenta bancaria incorrecta, vuelva a introducirla por favor: ");
-                    } else {
-                        System.out.println("""
-                                                                    
-                                Datos bancarios:
-                                Banco: Quiero aprobar el curso pero no tengo tiempo ni para existir
-                                Número de cuenta:\s""" + iban + """
-                                                                    
-                                Total a pagar: Todo cuanto se pueda y un poco más, muchas gracias.
-                                """);
-                        valido = false;
-                    }
-                } while (valido);
-
-                break;
-
-            //Si el usuario escoge de opción de pago Paypal tendrá que introducir su cuenta, y si elige bizum tiene que enviar dinero al número indicado
-
-            case "2":
-                System.out.println("\nIntroduce una cuenta de Paypal: ");
-                String email = sc.nextLine();
-                validar_correo(email);
-
-                System.out.println("Introduzca su contraseña: ");
-                sc.nextLine();
-                System.out.println("\nPaypal registrado, se le cobrará en instantes\n");
-                break;
-            case "3":
-                System.out.println("\nHaz un bizum al: 645039666\n");
-                break;
+            if (fecha_validada.isBefore(LocalDate.now())) {
+                System.out.println("Lo siento, para crear un evento debe ser del dia de hoy hacia delante.");
+                return "";
+            } else {
+                salir = true;
+            }
         }
-
-        if (opcion.equals("1")) {
-            pago = "El método de pago escogido ha sido: Transferencia bancaria";
-        } else if (opcion.equals("2")) {
-            pago = "El método de pago escogido ha sido: Paypal";
-        } else {
-            pago = "El método de pago ha sido: Bizum";
-        }
-        return pago;
-    }
-
-    public static String validar_int(String int_valido){
-       try{
-           Integer.parseInt(int_valido);
-       }catch (NumberFormatException ex){
-           System.out.println("Ha introducido un carácter no númerico o con decimales");
-           return "";
-       }
-
-        return int_valido;
-    }
-
-    public static String validar_double(String double_valido){
-        try{
-            Double.parseDouble(double_valido);
-        }catch (NumberFormatException ex){
-            System.out.println("Introduce un precio válido");
+        try {
+            boolean b = fecha == fecha_validada.toString();
+        } catch (NullPointerException ex) {
+            System.out.println("Ha introducido una fecha incorrecta");
             return "";
         }
-     return double_valido;
+        return fecha;
     }
+
+    public static String validarHora(String hora) {
+        String[] horaPartes;
+        LocalTime horaValidada = null;
+        int horaBien;
+        int minuto;
+        int segundo;
+        boolean salir = false;
+        boolean volver = false;
+
+        hora = hora.replace("/", "-");
+        hora = hora.replace(" ", "-");
+
+        Pattern pattern = Pattern.compile("^[0-9]{1,2}-[0-9]{1,2}$");
+        Matcher matcher = pattern.matcher(hora);
+
+        if (matcher.find()) {
+            horaPartes = hora.split("-");
+
+            horaBien = Integer.parseInt(horaPartes[0]);
+            minuto = Integer.parseInt(horaPartes[1]);
+
+            if (horaBien > 23 || horaBien < 0) {
+                System.out.println("Hora inapropiada vuelva a introducirla, por favor: ");
+                return "";
+            }
+            if (minuto > 59 || minuto < 0) {
+                System.out.println("Minuto no válido, vuelva a introducirla, por favor: ");
+                return "";
+            }
+        }
+        horaValidada = LocalTime.of(horaBien, minuto);
+        return hora;
+    }
+
+public static String metodoPago() {
+    Scanner sc = new Scanner(System.in);
+    String opcion, pago, iban, iban_convertido, letras_iban, numeros_iban, cuatro_digitos, numeros_iban_pasado;
+    char letras, numeros;
+    boolean valido = true;
+    boolean iban_mal = true;
+    BigInteger resultado;
+
+    do {
+        System.out.println("""
+                1. Transferencia bancaria
+                2. Paypal
+                3. Bizum
+                """);
+        opcion = sc.nextLine();
+
+        if (!(opcion.equals("1")) && !(opcion.equals("2")) && !(opcion.equals("3"))) {
+            System.out.println("Opción no válida, vuelva a escoger la opción que desea: ");
+        }
+
+    } while (!(opcion.equals("1")) && !(opcion.equals("2")) && !(opcion.equals("3")));
+
+    switch (opcion) {
+        case "1":
+            System.out.println("\nIntroduzca su numero de cuenta bancaria: ");
+            do {
+                do {
+                    iban = sc.nextLine();
+                    iban = iban.toUpperCase();
+                    iban = iban.replace(" ", "");
+                    if (iban.length() != 24) {
+                        System.out.println("Numero de cuenta no válido, vuelva a introducirlo por favor: ");
+                    } else {
+                        letras_iban = iban.substring(0, 2);
+                        numeros_iban = iban.substring(2);
+
+                        for (int i = 0; i < letras_iban.length(); i++) {
+                            letras = letras_iban.charAt(i);
+                            if (letras != 'E' && letras != 'S') {
+                                System.out.println("Cuenta bancaria no encontrada, vuelva a introducirla: ");
+                                iban_mal = true;
+                                break;
+                            }
+                        }
+
+                        for (int j = 0; j < numeros_iban.length(); j++) {
+                            numeros = numeros_iban.charAt(j);
+                            if (numeros < '0' || numeros > '9') {
+                                System.out.println("Cuenta bancaria no encontrada, vuelva a introducirla: ");
+                                iban_mal = true;
+                                break;
+                            } else {
+                                iban_mal = false;
+                            }
+                        }
+                    }
+                } while (iban_mal);
+
+                cuatro_digitos = iban.substring(0, 4);
+                numeros_iban_pasado = iban.substring(4);
+
+                iban_convertido = numeros_iban_pasado + cuatro_digitos;
+                iban_convertido = iban_convertido.replace("E", "14");
+                iban_convertido = iban_convertido.replace("S", "28");
+
+
+                BigInteger iban_numero = new BigInteger(iban_convertido);
+                resultado = iban_numero.mod(BigInteger.valueOf((97)));
+
+
+                //Primero validamos que los dos primeros carateres sean letras y lo demás números
+
+                /*Después reemplazamos los 4 primeros dígitos del IBAN al final y convertimos las letras a su valor numérico,
+                 *hacemos una división del IBAN convertido a números entre 97 y si el resto da 1 el IBAN es válido */
+
+                if (!String.valueOf(resultado).equals("1")) {
+                    System.out.println("Cuenta bancaria incorrecta, vuelva a introducirla por favor: ");
+                } else {
+                    System.out.println("""
+                                                                
+                            Datos bancarios:
+                            Banco: Quiero aprobar el curso pero no tengo tiempo ni para existir
+                            Número de cuenta:\s""" + iban + """
+                                                                
+                            Total a pagar: Todo cuanto se pueda y un poco más, muchas gracias.
+                            """);
+                    valido = false;
+                }
+            } while (valido);
+
+            break;
+
+        //Si el usuario escoge de opción de pago Paypal tendrá que introducir su cuenta, y si elige bizum tiene que enviar dinero al número indicado
+
+        case "2":
+            System.out.println("\nIntroduce una cuenta de Paypal: ");
+            String email = sc.nextLine();
+            validarCorreo(email);
+
+            System.out.println("Introduzca su contraseña: ");
+            sc.nextLine();
+            System.out.println("\nPaypal registrado, se le cobrará en instantes\n");
+            break;
+        case "3":
+            System.out.println("\nHaz un bizum al: 645039666\n");
+            break;
+    }
+
+    if (opcion.equals("1")) {
+        pago = "El método de pago escogido ha sido: Transferencia bancaria";
+    } else if (opcion.equals("2")) {
+        pago = "El método de pago escogido ha sido: Paypal";
+    } else {
+        pago = "El método de pago ha sido: Bizum";
+    }
+    return pago;
+}
+
+public static String validarInt(String int_valido) {
+    try {
+        Integer.parseInt(int_valido);
+    } catch (NumberFormatException ex) {
+        System.out.println("Ha introducido un carácter no númerico o con decimales");
+        return "";
+    }
+
+    return int_valido;
+}
+
+public static String validarDouble(String double_valido) {
+    try {
+        Double.parseDouble(double_valido);
+    } catch (NumberFormatException ex) {
+        System.out.println("Introduce un precio válido");
+        return "";
+    }
+    return double_valido;
+}
 }

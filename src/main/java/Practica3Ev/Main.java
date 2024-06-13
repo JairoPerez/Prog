@@ -12,8 +12,7 @@ public class Main {
 
         Gestor gestor_eventos = new Gestor();
         GestorAdministrador ges_admin = new GestorAdministrador(gestor_eventos.getListado_eventos(), gestor_eventos.getListado_salas());
-        ;
-        Usuario miasistente = null;
+        Usuario miAsistente = null;
         Scanner sc = new Scanner(System.in);
         int opcionAdmin = 0;
         int opcionEvento = 0;
@@ -39,10 +38,10 @@ public class Main {
                 switch (opcionMenu) {
                     case 1:
 
-                        miasistente = gestor_eventos.login();
+                        miAsistente = gestor_eventos.login();
                         break;
                     case 2:
-                        miasistente = gestor_eventos.registro();
+                        miAsistente = gestor_eventos.registro();
                         break;
                     case 3:
                         System.out.println("Saliendo...");
@@ -56,10 +55,10 @@ public class Main {
                 System.out.println(ex.getMessage());
                 sc.next();
             }
-        } while (miasistente == null);
+        } while (miAsistente == null);
 
 
-        if (miasistente instanceof Administrador) {
+        if (miAsistente instanceof Administrador) {
 
             do {
                 System.out.println("MENÚ PARA ADMINISTRADORES DE DELECTARE: ");
@@ -137,9 +136,9 @@ public class Main {
                     opcionEvento = sc.nextInt();
 
                     if (opcionEvento == 1) {
-                        gestor_eventos.mostrar_eventos(miasistente);
+                        gestor_eventos.mostrar_eventos(miAsistente);
                     } else if (opcionEvento == 2) {
-                        gestor_eventos.informacion_reservas(miasistente);
+                        gestor_eventos.informacion_reservas(miAsistente);
                     } else if (opcionEvento == 3) {
                         System.out.println("Saliendo...");
                     } else {

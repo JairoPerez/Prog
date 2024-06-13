@@ -6,13 +6,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
-import Practica3Ev.clases.Asistente;
 import Practica3Ev.clases.Evento;
 import Practica3Ev.clases.Sala;
 import Practica3Ev.clases.Usuario;
-
-import javax.xml.stream.FactoryConfigurationError;
 
 public class GestorAdministrador {
     Scanner sc = new Scanner(System.in);
@@ -41,13 +37,13 @@ public class GestorAdministrador {
             do {
                 System.out.println("Introduce el nombre del evento que quieres añadir");
                 nombreEvento = sc.nextLine();
-                nombreEvento = Validaciones.validar_nombre(nombreEvento);
+                nombreEvento = Validaciones.validarNombre(nombreEvento);
             } while (nombreEvento.isEmpty());
 
             do {
                 System.out.println("Introduce el invitado especial que desea añadir al evento");
                 invitado = sc.nextLine();
-                invitado = Validaciones.validar_nombre(invitado);
+                invitado = Validaciones.validarNombre(invitado);
             } while (invitado.isEmpty());
 
             do {
@@ -73,7 +69,7 @@ public class GestorAdministrador {
             do {
                 System.out.println("Seleccione fecha para el evento");
                 fechaEvento = sc.nextLine();
-                fechaEvento = Validaciones.validar_fecha(fechaEvento);
+                fechaEvento = Validaciones.validarFechaEvento(fechaEvento);
             } while (fechaEvento.isEmpty());
 
             System.out.println("Seleccione hora para el evento");
@@ -88,13 +84,13 @@ public class GestorAdministrador {
             do {
                 System.out.println("Introduzca precio del evento");
                 precioEvento = sc.nextLine();
-                precioEvento = Validaciones.validar_double(precioEvento);
+                precioEvento = Validaciones.validarDouble(precioEvento);
             } while (precioEvento.isEmpty());
 
             do {
                 System.out.println("Que tipo de evento desea crear");
                 tipoEvento = sc.nextLine();
-                tipoEvento = Validaciones.validar_nombre(tipoEvento);
+                tipoEvento = Validaciones.validarNombre(tipoEvento);
             } while (tipoEvento.isEmpty());
 
             fechaEvento = LocalDate.EPOCH.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -109,7 +105,6 @@ public class GestorAdministrador {
     }
 
     public void eliminarEvento() {
-        //NS COMO PONER EL EVENTO QUE SELECCIONA EL USUARIO
         int eventoEliminar = 0;
 
         do {
