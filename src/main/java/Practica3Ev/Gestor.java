@@ -175,18 +175,14 @@ public class Gestor {
         listado_usuarios.add(nuevoUsuario);
 
         try {
-            FileWriter fw = new FileWriter("src/main/java/Practica3Ev/data/usuarios.dat", true);
-            BufferedWriter bw = new BufferedWriter(fw);
-            bw.write(String.valueOf(nuevoUsuario));
-            bw.close();
-            System.out.println("\nUsuario añadido correctamente");
+            volcarUsuarios();
         } catch (IOException ex) {
-            System.out.println("Error al añadir contenido al archivo");
+            System.out.println("Error de entrada/salida");
         }
+
 
         return nuevoUsuario;
     }
-
 
     public void info_inicial() throws IOException {
 
@@ -206,28 +202,29 @@ public class Gestor {
             listado_salas[i] = new Sala("Sala " + i, misbutacas.size(), misbutacas, 100.0);
         }
 
-//        listado_usuarios.add(new Asistente("Jairo", "Pérez", "jairo.perez@gmail.com", "Hola1212", "49626489x", "645039666", "12-04-2000"));
-//        listado_usuarios.add(new Asistente("Pepe", "Pérez", "pepe@gmail.com", "Hola123425", "49626489x", "645039666", "12-04-2000"));
-//        listado_usuarios.add(new Asistente("Ramon", "Pérez", "johnny@gmail.com", "Hola123425", "49626489x", "645039666", "12-04-2000"));
-//        listado_usuarios.add(new Administrador("root", "root", "admin@admin.com", "root12345", "49626489x", "645039665", 1));
-//        volcarUsuarios();
+        /*
+        listado_usuarios.add(new Asistente("Jairo", "Pérez", "jairo.perez@gmail.com", "Hola1212", "49626489x", "645039666", "12-04-2000"));
+        listado_usuarios.add(new Asistente("Pepe", "Pérez", "pepe@gmail.com", "Hola1223", "49626489x", "645039666", "12-04-2000"));
+        listado_usuarios.add(new Asistente("Ramon", "Pérez", "johnny@gmail.com", "Hola1223", "49626489x", "645039666", "12-04-2000"));
+        listado_usuarios.add(new Administrador("root", "root", "admin@admin.com", "root2005", "49626489x", "645039665", 1));
+        volcarUsuarios();*/
         leerUsuario();
 
-
-//        listado_eventos.add(new Evento("El principito", "Mari Carmen Ortuño", listado_salas[0], LocalDate.of(2025, 5, 12), LocalTime.of(18, 0), 70, "Obra de teatro", listado_salas[0].total_butacas(), listado_usuarios));
-//        listado_eventos.add(new Evento("Final de la LEC", "Isabel Lafuente Garcia", listado_salas[1], LocalDate.of(2025, 6, 25), LocalTime.of(17, 0), 50, "Torneo de sports", listado_salas[1].total_butacas(), listado_usuarios));
-//        listado_eventos.add(new Evento("El cisne negro", "Victor Sarabia Simon", listado_salas[2], LocalDate.of(2025, 3, 13), LocalTime.of(19, 0), 30, "Película", listado_salas[2].total_butacas(), listado_usuarios));
-//        listado_eventos.add(new Evento("Romeo y Julieta", "Johnny Sins", listado_salas[3], LocalDate.of(2024, 7, 9), LocalTime.of(20, 0), 40, "Obra de teatro", listado_salas[3].total_butacas(), listado_usuarios));
-//        listado_eventos.add(new Evento("Bodas de sangre", "Lorca", listado_salas[4], LocalDate.of(2024, 10, 4), LocalTime.of(18, 30), 50, "Obra de teatro", listado_salas[4].total_butacas(), listado_usuarios));
-//        volcarEventos();
+        /*
+        listado_eventos.add(new Evento("El principito", "Mari Carmen Ortuño", listado_salas[0], LocalDate.of(2025, 5, 12), LocalTime.of(18, 0), 70, "Obra de teatro", listado_salas[0].total_butacas(), listado_usuarios));
+        listado_eventos.add(new Evento("Final de la LEC", "Isabel Lafuente Garcia", listado_salas[1], LocalDate.of(2025, 6, 25), LocalTime.of(17, 0), 50, "Torneo de sports", listado_salas[1].total_butacas(), listado_usuarios));
+        listado_eventos.add(new Evento("El cisne negro", "Victor Sarabia Simon", listado_salas[2], LocalDate.of(2025, 3, 13), LocalTime.of(19, 0), 30, "Película", listado_salas[2].total_butacas(), listado_usuarios));
+        listado_eventos.add(new Evento("Romeo y Julieta", "Johnny Sins", listado_salas[3], LocalDate.of(2024, 7, 9), LocalTime.of(20, 0), 40, "Obra de teatro", listado_salas[3].total_butacas(), listado_usuarios));
+        listado_eventos.add(new Evento("Bodas de sangre", "Lorca", listado_salas[4], LocalDate.of(2024, 10, 4), LocalTime.of(18, 30), 50, "Obra de teatro", listado_salas[4].total_butacas(), listado_usuarios));
+        volcarEventos();*/
         leerEventos();
 
-
-//        listado_reservas.add(new Reserva("1", listado_usuarios.get(0),listado_eventos.get(0),listado_salas[1].getLista_butacas().get(0),LocalDate.of(2025,12,2), LocalTime.of(12,30)));
-//        listado_reservas.add(new Reserva("2", listado_usuarios.get(1),listado_eventos.get(1),listado_salas[2].getLista_butacas().get(1),LocalDate.of(2025,11,2), LocalTime.of(13,30)));
-//        listado_reservas.add(new Reserva("3", listado_usuarios.get(2),listado_eventos.get(2),listado_salas[3].getLista_butacas().get(2),LocalDate.of(2025,10,2), LocalTime.of(14,30)));
-//        listado_reservas.add(new Reserva("4", listado_usuarios.get(3),listado_eventos.get(3),listado_salas[0].getLista_butacas().get(3),LocalDate.of(2025,9,2), LocalTime.of(15,30)));
-//        volcarReservas();
+        /*
+        listado_reservas.add(new Reserva("1", listado_usuarios.get(0),listado_eventos.get(0),listado_salas[1].getLista_butacas().get(0),LocalDate.of(2025,12,2), LocalTime.of(12,30)));
+        listado_reservas.add(new Reserva("2", listado_usuarios.get(1),listado_eventos.get(1),listado_salas[2].getLista_butacas().get(1),LocalDate.of(2025,11,2), LocalTime.of(13,30)));
+        listado_reservas.add(new Reserva("3", listado_usuarios.get(2),listado_eventos.get(2),listado_salas[3].getLista_butacas().get(2),LocalDate.of(2025,10,2), LocalTime.of(14,30)));
+        listado_reservas.add(new Reserva("4", listado_usuarios.get(3),listado_eventos.get(3),listado_salas[0].getLista_butacas().get(3),LocalDate.of(2025,9,2), LocalTime.of(15,30)));
+        volcarReservas();*/
         leerReservas();
 
 
@@ -369,15 +366,19 @@ public class Gestor {
     }
 
     public void informacion_reservas(Usuario asistente) {
+        boolean reservaEncontrada = false;
         try {
             if (!listado_reservas.isEmpty()) {
                 for (Reserva r : listado_reservas) {
                     if (r.getAsistente().equals(asistente)) {
                         r.mostrar_info_reserva();
+                        reservaEncontrada = true;
                     }
                 }
             }
-            throw new ReservaInexistenteException();
+            if (!reservaEncontrada) {
+                throw new ReservaInexistenteException();
+            }
         } catch (ReservaInexistenteException ex) {
             System.out.println(ex.getMessage());
         }

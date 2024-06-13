@@ -1,12 +1,15 @@
 package Practica3Ev;
-
 import Practica3Ev.clases.Administrador;
 import Practica3Ev.clases.Usuario;
 import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-
+/**
+ * @author Jairo Pérez Ramón
+ * @version 1.0
+ * @since 2024-02-10
+ */
 
 public class Main {
     public static void main(String[] args) {
@@ -38,7 +41,6 @@ public class Main {
 
                 switch (opcionMenu) {
                     case 1:
-
                         miAsistente = gestor_eventos.login();
                         break;
                     case 2:
@@ -53,7 +55,7 @@ public class Main {
                 }
 
             } catch (InputMismatchException ex) {
-                System.out.println(ex.getMessage());
+                System.out.println("Introduce un valor correspondiente");
                 sc.next();
             }
         } while (miAsistente == null);
@@ -147,6 +149,7 @@ public class Main {
                     }
                 } catch (InputMismatchException ex) {
                     System.out.println("Introduce un valor númerico");
+                    sc.next();  //TODOS LOS INPUTMISMATCHEXCEPTION NECESITAN LLEVAR EL SC.NEXT PARA LIMPIAR LA LETRA DEL SCANNER
 
                 }
             } while (opcionEvento != 3);

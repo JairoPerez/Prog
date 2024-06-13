@@ -35,6 +35,7 @@ public class GestorAdministrador {
 
         do {
             do {
+                sc.nextLine();
                 System.out.println("Introduce el nombre del evento que quieres añadir");
                 nombreEvento = sc.nextLine();
                 nombreEvento = Validaciones.validarNombre(nombreEvento);
@@ -64,16 +65,13 @@ public class GestorAdministrador {
 
             } while (sala == null);
 
-            sc.nextLine();
-
             do {
+                sc.nextLine();
                 System.out.println("Seleccione fecha para el evento");
                 fechaEvento = sc.nextLine();
                 fechaEvento = Validaciones.validarFechaEvento(fechaEvento);
             } while (fechaEvento.isEmpty());
 
-            System.out.println("Seleccione hora para el evento");
-            sc.nextLine();
 
             do {
                 System.out.println("Seleccione hora para el evento");
@@ -100,6 +98,8 @@ public class GestorAdministrador {
 
             listado_eventos.add(new Evento(nombreEvento, invitado, sala, fecha, LocalTime.of(12, 54), precio, tipoEvento, sala.getCapacidad_maxima(), new ArrayList<Usuario>()));
 
+            System.out.println("EVENTO AÑADIDO CORRECTAMENTE");
+
         } while (salir);
 
     }
@@ -125,7 +125,6 @@ public class GestorAdministrador {
                 }
             } catch (InputMismatchException ex) {
                 System.out.println("Introduce un carácter númerico");
-                sc.next();
                 break;
             } catch (ArrayIndexOutOfBoundsException ex) {
                 System.out.println("Introduce un número de evento válido");
