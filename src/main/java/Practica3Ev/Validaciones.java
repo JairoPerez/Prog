@@ -29,7 +29,7 @@ public class Validaciones {
             } else if (asiento.equals("A1") || asiento.equals("A2") || asiento.equals("A3")) {
                 System.out.print("Asiento ocupado, seleccione otro asiento por favor: ");
                 return "";
-            } else if (asiento.charAt(0) != 'A' && asiento.charAt(0) != 'B' && asiento.charAt(0) != 'C') {
+            } else if (asiento.charAt(0) != 'A' && asiento.charAt(0) != 'B' && asiento.charAt(0) != 'C'&& asiento.charAt(0) != 'D'&& asiento.charAt(0) != 'F') {
                 System.out.print("Asiento no válido para esta función, seleccione otro asiento por favor: ");
                 return "";
             } else if ((asiento.charAt(1) > '6' || asiento.charAt(1) < '1')) {

@@ -180,7 +180,7 @@ public class Gestor {
             System.out.println("Error de entrada/salida");
         }
 
-
+        System.out.println("Usuario creado correctamente");
         return nuevoUsuario;
     }
 
@@ -334,7 +334,6 @@ public class Gestor {
                 asiento = sc.nextLine();
                 asiento = Validaciones.comprobarAsiento(asiento);
             } while (asiento.isEmpty());
-
 
             for (Butaca b : evento.getSala().getLista_butacas()) {
                 if (b.getPosicion().equals(asiento)) {
