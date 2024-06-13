@@ -75,11 +75,11 @@ public class GestorAdministrador {
             System.out.println("Seleccione hora para el evento");
             sc.nextLine();
 
-//            do {
-//                System.out.println("Seleccione hora para el evento");
-//                horaEvento = sc.nextLine();   //VALIDAR HORA CREAR VALIDACION
-//                horaEvento = Validaciones.validar_hora(horaEvento);
-//            } while (horaEvento.isEmpty());
+            do {
+                System.out.println("Seleccione hora para el evento");
+                horaEvento = sc.nextLine();
+                horaEvento = Validaciones.validarHora(horaEvento);
+            } while (horaEvento.isEmpty());
 
             do {
                 System.out.println("Introduzca precio del evento");

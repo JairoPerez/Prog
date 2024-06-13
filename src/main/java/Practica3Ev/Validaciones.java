@@ -9,6 +9,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Validaciones {
+
+    /**
+     *
+     * @author Jairo Pérez Ramón
+     *
+     */
     public static String comprobarAsiento(String asiento) {
         boolean repetir = true;
 
@@ -222,7 +228,6 @@ public class Validaciones {
 
     public static String crearToken() {
         UUID token = UUID.randomUUID();
-        System.out.println(token.toString());
         return token.toString();
     }
 
@@ -282,7 +287,7 @@ public class Validaciones {
             fecha_mayor = LocalDate.now();
 
             if (anno < 1935 || fecha_validada.isAfter(fecha_mayor.minusYears(18))) {
-                System.out.println("Lo siento, para hacer una reserva debes tener al menos 18 años debido a razones de seguridad.");
+                System.out.println("Lo siento, necesita tener 18 años debido a razones de seguridad.");
                 return "";
             } else {
                 salir = true;
@@ -370,20 +375,20 @@ public class Validaciones {
     public static String validarHora(String hora) {
         String[] horaPartes;
         LocalTime horaValidada = null;
-        int horaBien;
-        int minuto;
+        int horaBien = 0;
+        int minuto = 0;
         int segundo;
         boolean salir = false;
         boolean volver = false;
 
-        hora = hora.replace("/", "-");
-        hora = hora.replace(" ", "-");
+        hora = hora.replace("/", ":");
+        hora = hora.replace(" ", ":");
 
-        Pattern pattern = Pattern.compile("^[0-9]{1,2}-[0-9]{1,2}$");
+        Pattern pattern = Pattern.compile("^[0-9]{1,2}:[0-9]{1,2}$");
         Matcher matcher = pattern.matcher(hora);
 
         if (matcher.find()) {
-            horaPartes = hora.split("-");
+            horaPartes = hora.split(":");
 
             horaBien = Integer.parseInt(horaPartes[0]);
             minuto = Integer.parseInt(horaPartes[1]);
@@ -396,8 +401,15 @@ public class Validaciones {
                 System.out.println("Minuto no válido, vuelva a introducirla, por favor: ");
                 return "";
             }
+            horaValidada = LocalTime.of(horaBien, minuto);
+        } 
+        try {
+            boolean b = hora == horaValidada.toString();
+        }catch (NullPointerException ex){
+            System.out.println("Introduce una hora adecuada");
+            return "";
         }
-        horaValidada = LocalTime.of(horaBien, minuto);
+       
         return hora;
     }
 

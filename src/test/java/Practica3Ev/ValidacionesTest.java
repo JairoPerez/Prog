@@ -1,7 +1,5 @@
 package Practica3Ev;
-
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ValidacionesTest {
@@ -9,8 +7,10 @@ public class ValidacionesTest {
     @Test
     public void testNombre() {
         String input = "José ÑáéíóÓÚúz";
+        input=input.toUpperCase();
         String resultado = Validaciones.validarNombre(input);
-        assertEquals(input.toUpperCase(), resultado);
+        assertEquals(input, resultado);
+        assertFalse(input!=resultado);
     }
 
     @Test
@@ -57,8 +57,14 @@ public class ValidacionesTest {
 
     @Test
     public void ValidarFecha() {
-        String input = "23-03-2005";
+        String input = "23-3-2000";
         String resultado = Validaciones.validarFecha(input);
+        assertEquals(input, resultado);
+    }
+    @Test
+    public void validarHora(){
+        String input = "00:00";
+        String resultado = Validaciones.validarHora(input);
         assertEquals(input, resultado);
     }
 

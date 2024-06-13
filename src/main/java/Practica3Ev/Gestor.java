@@ -179,8 +179,7 @@ public class Gestor {
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write(String.valueOf(nuevoUsuario));
             bw.close();
-            System.out.println("\nAñadido correctamente");
-            System.out.println(nuevoUsuario);
+            System.out.println("\nUsuario añadido correctamente");
         } catch (IOException ex) {
             System.out.println("Error al añadir contenido al archivo");
         }
@@ -211,7 +210,7 @@ public class Gestor {
 //        listado_usuarios.add(new Asistente("Pepe", "Pérez", "pepe@gmail.com", "Hola123425", "49626489x", "645039666", "12-04-2000"));
 //        listado_usuarios.add(new Asistente("Ramon", "Pérez", "johnny@gmail.com", "Hola123425", "49626489x", "645039666", "12-04-2000"));
 //        listado_usuarios.add(new Administrador("root", "root", "admin@admin.com", "root12345", "49626489x", "645039665", 1));
-//      volcarUsuario();
+//        volcarUsuarios();
         leerUsuario();
 
 
@@ -220,7 +219,7 @@ public class Gestor {
 //        listado_eventos.add(new Evento("El cisne negro", "Victor Sarabia Simon", listado_salas[2], LocalDate.of(2025, 3, 13), LocalTime.of(19, 0), 30, "Película", listado_salas[2].total_butacas(), listado_usuarios));
 //        listado_eventos.add(new Evento("Romeo y Julieta", "Johnny Sins", listado_salas[3], LocalDate.of(2024, 7, 9), LocalTime.of(20, 0), 40, "Obra de teatro", listado_salas[3].total_butacas(), listado_usuarios));
 //        listado_eventos.add(new Evento("Bodas de sangre", "Lorca", listado_salas[4], LocalDate.of(2024, 10, 4), LocalTime.of(18, 30), 50, "Obra de teatro", listado_salas[4].total_butacas(), listado_usuarios));
-//      volcarEventos();
+//        volcarEventos();
         leerEventos();
 
 
@@ -228,8 +227,7 @@ public class Gestor {
 //        listado_reservas.add(new Reserva("2", listado_usuarios.get(1),listado_eventos.get(1),listado_salas[2].getLista_butacas().get(1),LocalDate.of(2025,11,2), LocalTime.of(13,30)));
 //        listado_reservas.add(new Reserva("3", listado_usuarios.get(2),listado_eventos.get(2),listado_salas[3].getLista_butacas().get(2),LocalDate.of(2025,10,2), LocalTime.of(14,30)));
 //        listado_reservas.add(new Reserva("4", listado_usuarios.get(3),listado_eventos.get(3),listado_salas[0].getLista_butacas().get(3),LocalDate.of(2025,9,2), LocalTime.of(15,30)));
-//
-//      volcarReservas();
+//        volcarReservas();
         leerReservas();
 
 
@@ -257,8 +255,6 @@ public class Gestor {
         } catch (ArrayIndexOutOfBoundsException ex) {
             System.out.println("No hay ningun usuario listado.");
         }
-
-
     }
 
     public void mostrar_eventos(Usuario asistente) {
@@ -356,19 +352,16 @@ public class Gestor {
             } else {
                 System.out.println("Esta butaca está ocupada escoja otra, por favor: ");
             }
-
-//            System.out.println("Resumen de la reserva: ");
-//            System.out.println("Evento al que asistirá: " + evento.getNombre());
-//            System.out.println("Sala del evento: " + evento.getSala().getNombre());
-//            System.out.println("Fecha y hora del evento " + evento.getFecha() + " a las " + evento.getHora());
-//            System.out.println("Precio del evento: " + evento.getPrecio());
-
-            System.out.println("\n¿De que manera quiere efectuar el pago?");
-            Validaciones.metodoPago();
-
         } while (!salir);
+        System.out.println("\n¿De que manera quiere efectuar el pago?");
+        Validaciones.metodoPago();
 
-        //listado_reservas.add(new Reserva(token, asistente, evento, butaca, evento.getFecha(), evento.getHora()));
+        try {
+            listado_reservas.add(new Reserva(token, asistente, evento, butaca, evento.getFecha(), evento.getHora()));
+            volcarReservas();
+        } catch (IOException ex) {
+            System.out.println("Error de entrada/salida");
+        }
 
         System.out.println("Aquí tienes el token de tu reserva procura no perderlo: " + token + "\n");
 
@@ -376,13 +369,6 @@ public class Gestor {
     }
 
     public void informacion_reservas(Usuario asistente) {
-
-        for (Reserva r : listado_reservas) {
-            r.mostrar_info_reserva();
-        }
-
-        listado_reservas.add(new Reserva("5", listado_usuarios.get(1), listado_eventos.get(2), listado_salas[1].getLista_butacas().get(3), LocalDate.of(2025, 7, 15), LocalTime.of(15, 00)));
-
         try {
             if (!listado_reservas.isEmpty()) {
                 for (Reserva r : listado_reservas) {
@@ -467,7 +453,6 @@ public class Gestor {
                 listado_usuarios.add(u);
             }
         } catch (EOFException ex) {
-            System.out.println("Se han leído todos las usuarios");
         } catch (ClassNotFoundException ex) {
             System.out.println("Hay un error en la clase");
         } finally {
@@ -488,7 +473,6 @@ public class Gestor {
                 listado_eventos.add(e);
             }
         } catch (EOFException ex) {
-            System.out.println("Se han leído todos los eventos");
         } catch (ClassNotFoundException ex) {
             System.out.println("Hay un error en la clase");
         } finally {
@@ -509,7 +493,6 @@ public class Gestor {
                 listado_reservas.add(r);
             }
         } catch (EOFException ex) {
-            System.out.println("Se han leído todas las reservas");
         } catch (ClassNotFoundException ex) {
             System.out.println("Hay un error en la clase");
         } finally {
