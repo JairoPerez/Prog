@@ -287,7 +287,7 @@ public class Validaciones {
             fecha_validada = LocalDate.of(anno, mes, dia);
             fecha_mayor = LocalDate.now();
 
-            if (anno < 1935 || fecha_validada.isAfter(fecha_mayor.minusYears(18))) {
+            if (anno < 1920 || fecha_validada.isAfter(fecha_mayor.minusYears(18))) {
                 System.out.println("Lo siento, necesita tener 18 años debido a razones de seguridad.");
                 return "";
             } else {
@@ -306,7 +306,6 @@ public class Validaciones {
     public static String validarFechaEvento(String fecha) {
         String[] fecha_partes;
         LocalDate fecha_validada = null;
-        LocalDate fecha_mayor;
         int dia;
         int mes;
         int anno;

@@ -15,7 +15,7 @@ public class ValidacionesTest {
 
     @Test
     public void TestFechaEvento() {
-        String input = "12-6-2030";
+        String input = "a-a-aaaa";
         String resultado = Validaciones.validarFechaEvento(input);
         assertEquals(input, resultado);
     }
@@ -57,13 +57,14 @@ public class ValidacionesTest {
 
     @Test
     public void ValidarFecha() {
-        String input = "23-3-2000";
+        String input = "1-1-2000";
         String resultado = Validaciones.validarFecha(input);
         assertEquals(input, resultado);
     }
+
     @Test
     public void validarHora(){
-        String input = "00:00";
+        String input = "23:30";
         String resultado = Validaciones.validarHora(input);
         assertEquals(input, resultado);
     }

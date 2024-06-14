@@ -65,8 +65,10 @@ public class GestorAdministrador {
 
             } while (sala == null);
 
+            sc.nextLine();
+
             do {
-                sc.nextLine();
+
                 System.out.println("Seleccione fecha para el evento");
                 fechaEvento = sc.nextLine();
                 fechaEvento = Validaciones.validarFechaEvento(fechaEvento);
@@ -125,6 +127,7 @@ public class GestorAdministrador {
                 }
             } catch (InputMismatchException ex) {
                 System.out.println("Introduce un carácter númerico");
+                sc.next();
                 break;
             } catch (ArrayIndexOutOfBoundsException ex) {
                 System.out.println("Introduce un número de evento válido");
@@ -161,6 +164,7 @@ public class GestorAdministrador {
                 }
             } catch (InputMismatchException ex) {
                 System.out.println("Introduce un valor númerico");
+                sc.next();
                 salir=false;
             } catch (ArrayIndexOutOfBoundsException ex) {
                 System.out.println("Introduce un número de evento válido");
