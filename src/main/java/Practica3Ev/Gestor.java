@@ -83,10 +83,10 @@ public class Gestor {
         } while (password.isEmpty());
 
         try {
-            for (Usuario a : listado_usuarios) {
+            for (Usuario u : listado_usuarios) {
 
-                if (email.equals(a.getEmail()) && password.equals(a.getPassword())) {
-                    return a;
+                if (email.equals(u.getEmail()) && password.equals(u.getPassword())) {
+                    return u;
                 }
             }
             throw new UsuarioNoEncontradoException();
@@ -100,7 +100,7 @@ public class Gestor {
 
     public Usuario registro() {
         Scanner sc = new Scanner(System.in);
-        String nombre;
+        String nombre = null;
         String apellidos;
         String email;
         String dni;
@@ -114,7 +114,6 @@ public class Gestor {
                 System.out.println("Introduzca su nombre: ");
                 nombre = sc.nextLine();
                 nombre = Validaciones.validarNombre(nombre);
-
             } while (nombre.isEmpty());
 
             do {
@@ -174,6 +173,8 @@ public class Gestor {
 
         listado_usuarios.add(nuevoUsuario);
 
+        //UNA VEZ AÑADIDO AL ARRAYLIST LO VOLCAMOS AL ARCHIVO CON EL MÉTODO VOLCARUSUARIO
+
         try {
             volcarUsuarios();
         } catch (IOException ex) {
@@ -181,6 +182,7 @@ public class Gestor {
         }
 
         System.out.println("Usuario creado correctamente");
+
         return nuevoUsuario;
     }
 
@@ -277,8 +279,10 @@ public class Gestor {
 
             System.out.println("\nSelecciona un evento para ver la información del mismo: ");
             opcion = sc.nextLine();
+
             Pattern pattern = Pattern.compile("[0-9]+");
             Matcher matcher = pattern.matcher(opcion);
+
             if (opcion.length() <= eventos_ahora.size()) {
                 if (matcher.find()) {
                     int num_evento = Integer.parseInt(opcion) - 1;
@@ -315,7 +319,7 @@ public class Gestor {
 
     public void mostrar_asistentes() {
         for (Usuario a : listado_usuarios) {
-            System.out.println(a);
+            System.out.println(a.toString());
         }
     }
 
@@ -341,13 +345,23 @@ public class Gestor {
                     break;
                 }
             }
-            if (butaca != null) {
-                butaca.setDisponible(false);
-                System.out.println("¡Esta butaca está libre!\n");
-                salir = true;
-            } else {
-                System.out.println("Esta butaca está ocupada escoja otra, por favor: ");
+
+            try{
+                if (butaca.isDisponible()) {
+                    if (butaca != null) {
+                        butaca.setDisponible(false);
+                        System.out.println("¡Esta butaca está libre!\n");
+                        salir = true;
+                    } else {
+                        System.out.println("Esta butaca está ocupada escoja otra, por favor: ");
+                    }
+                } else {
+                    System.out.println("Butaca ocupada, por favor seleccione otra.");
+                }
+            }catch (NullPointerException ex){
+                System.out.println("Introduce un valor dentro del rango1");
             }
+
         } while (!salir);
         System.out.println("\n¿De que manera quiere efectuar el pago?");
         Validaciones.metodoPago();
@@ -369,7 +383,7 @@ public class Gestor {
         try {
             if (!listado_reservas.isEmpty()) {
                 for (Reserva r : listado_reservas) {
-                    if (r.getAsistente().equals(asistente)) {
+                    if (r.getAsistente().getEmail().equals(asistente.getEmail())) {
                         r.mostrar_info_reserva();
                         reservaEncontrada = true;
                     }
@@ -381,8 +395,6 @@ public class Gestor {
         } catch (ReservaInexistenteException ex) {
             System.out.println(ex.getMessage());
         }
-
-
     }
 
     public void volcarUsuarios() throws IOException {

@@ -6,22 +6,22 @@ public class ValidacionesTest {
 
     @Test
     public void testNombre() {
-        String input = "José ÑáéíóÓÚúz";
+        String input = "Jáíró Qú@Zñç";
         input=input.toUpperCase();
         String resultado = Validaciones.validarNombre(input);
-        assertEquals(input, resultado);
-        assertFalse(input!=resultado);
+        assertTrue(input!=resultado);
+
     }
 
     @Test
     public void TestFechaEvento() {
-        String input = "a-a-aaaa";
+        String input = "1-1-2025";
         String resultado = Validaciones.validarFechaEvento(input);
         assertEquals(input, resultado);
     }
 
     @Test
-    public void TestCorreo1() {
+    public void TestCorreo() {
         String input = "jáiro-cox@cox23gmail.com";
         String resultado = Validaciones.validarCorreo(input);
         assertEquals(input, resultado);

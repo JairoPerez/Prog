@@ -11,7 +11,6 @@ public abstract class Usuario implements Serializable {
     protected String telefono;
 
     Usuario(){
-
     }
 
     public Usuario(String nombre, String apellidos, String email, String password, String dni, String telefono) {

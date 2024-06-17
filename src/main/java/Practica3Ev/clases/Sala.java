@@ -88,11 +88,4 @@ public class Sala implements Serializable {
     public int total_butacas() {
         return lista_butacas.size();
     }
-
-    void mostrar_butacas() {
-        for (Butaca b : lista_butacas) {
-            System.out.println(b.getPosicion() + " (" + b.getId() + ") ");
-        }
-    }
-    //TODO HACER METODO PARA COMPROBAR CAPACIDAD
 }

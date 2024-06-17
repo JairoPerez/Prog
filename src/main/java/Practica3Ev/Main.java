@@ -22,8 +22,7 @@ public class Main {
         int opcionEvento = 0;
         int opcionMenu;
         int opcion = 0;
-
-
+        
         do {
             try {
                 System.out.println("""

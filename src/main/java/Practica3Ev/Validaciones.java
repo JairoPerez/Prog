@@ -1,4 +1,5 @@
 package Practica3Ev;
+
 import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -19,7 +20,6 @@ public class Validaciones {
     public static String comprobarAsiento(String asiento) {
         boolean repetir = true;
 
-        do {
             asiento = asiento.toUpperCase();
 
             //Si el asiento tiene más de 2 carácteres da como no válido
@@ -29,34 +29,23 @@ public class Validaciones {
             } else if (asiento.equals("A1") || asiento.equals("A2") || asiento.equals("A3")) {
                 System.out.print("Asiento ocupado, seleccione otro asiento por favor: ");
                 return "";
-            } else if (asiento.charAt(0) != 'A' && asiento.charAt(0) != 'B' && asiento.charAt(0) != 'C'&& asiento.charAt(0) != 'D'&& asiento.charAt(0) != 'F') {
+            } else if (asiento.charAt(0) != 'A' && asiento.charAt(0) != 'B' && asiento.charAt(0) != 'C' && asiento.charAt(0) != 'D' && asiento.charAt(0) != 'F') {
                 System.out.print("Asiento no válido para esta función, seleccione otro asiento por favor: ");
                 return "";
             } else if ((asiento.charAt(1) > '6' || asiento.charAt(1) < '1')) {
                 System.out.print("Asiento no válido para esta función, seleccione otro asiento por favor: ");
                 return "";
-            } else {
-                repetir = false;
             }
-        } while (repetir);
         return asiento;
     }
 
     public static String validarNombre(String nombre) {
-        char letra;
-        boolean terminar = true;
-
-
         nombre = nombre.toUpperCase();
 
-        if (!nombre.matches("^[a-zA-ZáéíóúñÑÁÉÍÓÚÄËÏÖÜ\\s]+$")) {
+        if (!nombre.matches("^[a-zA-ZáéíóúäëïöüñçÇÑÁÉÍÓÚÄËÏÖÜ\\s]+$")) {
             System.out.println("Formato de entrada inválido. Por favor, introduce un valor correcto: ");
             return "";
-
-        } else {
-            terminar = false;
         }
-
         return nombre;
     }
 
@@ -64,79 +53,59 @@ public class Validaciones {
         String[] entre_arroba;
         String[] despues_punto;
 
-        boolean necesario = false;
-        boolean terminar = false;
+        correo = correo.toLowerCase();
+        correo = correo.replace(" ", "");
 
-        do {
-            do {
-                correo = correo.toLowerCase();
-                correo = correo.replace(" ", "");
+        entre_arroba = correo.split("@");
 
+        if (!correo.contains("@") || !correo.contains(".")) {
+            System.out.println("Correo no válido, vuelva a introducirlo por favor: ");
+            return "";
+        } else if (!entre_arroba[0].matches("[a-zA-ZáéíóúñÑÁÉÍÓÚÄËÏÖÜ0-9._-]+")) { //partimos el string por el @ para que sea más fácil validar con expresión regular ([usuario]@[dominio])
+            System.out.println("Correo no válido, vuelva a introducirlo por favor: ");
+            return "";
+        }
+        despues_punto = entre_arroba[1].split("\\.");
+        //partimos el dominio por el punto para validar que no introduzca carácteres especiales no válidos ([dominio][tld])
 
-                entre_arroba = correo.split("@");
-
-                if (!correo.contains("@") || !correo.contains(".")) {
-                    System.out.println("Correo no válido, vuelva a introducirlo por favor: ");
-                    return "";
-                } else if (!entre_arroba[0].matches("[a-zA-ZáéíóúñÑÁÉÍÓÚÄËÏÖÜ0-9._-]+")) { //partimos el string por el @ para que sea más fácil validar con expresión regular ([usuario]@[dominio])
-                    System.out.println("Correo no válido, vuelva a introducirlo por favor: ");
-                    return "";
-                } else {
-                    necesario = true;
-                }
-            } while (!necesario);
-
-            despues_punto = entre_arroba[1].split("\\.");
-            //partimos el dominio por el punto para validar que no introduzca carácteres especiales no válidos ([dominio][tld])
-
-            if (despues_punto.length < 2) {
-                System.out.println("Formato de correo no válido, vuelva a introducirlo: ");
+        if (despues_punto.length < 2) {
+            System.out.println("Formato de correo no válido, vuelva a introducirlo: ");
+            return "";
+        } else {
+            if (!despues_punto[0].matches("[a-zA-ZáéíóúñÑÁÉÍÓÚÄËÏÖÜ0-9._-]+")) {
+                System.out.println("Correo no válido, vuelva a introducirlo por favor: ");
                 return "";
-            } else {
-                if (!despues_punto[0].matches("[a-zA-ZáéíóúñÑÁÉÍÓÚÄËÏÖÜ0-9._-]+")) {
-                    System.out.println("Correo no válido, vuelva a introducirlo por favor: ");
-                    return "";
-                } else if (!despues_punto[1].matches("[a-zA-ZáéíóúñÑÁÉÍÓÚÄËÏÖÜ]+")) { //puede contener número y/o carácteres especiales pero es muy raro
-                    System.out.println("Correo no válido, vuelva a introducirlo por favor: ");
-                    return "";
-                } else {
-                    terminar = true;
-                }
+            } else if (!despues_punto[1].matches("[a-zA-ZáéíóúñÑÁÉÍÓÚÄËÏÖÜ]+")) { //puede contener número y/o carácteres especiales pero es muy raro
+                System.out.println("Correo no válido, vuelva a introducirlo por favor: ");
+                return "";
             }
-
-
-        } while (!terminar);
-
+        }
         return correo;
     }
 
+
     public static String validarContrasena(String contrasena) {
-        boolean salir = false;
 
+        Pattern letras = Pattern.compile("[a-zA-Z]+");
+        Matcher matcher_letras = letras.matcher(contrasena);
 
-        do {
-            Pattern letras = Pattern.compile("[a-zA-Z]+");
-            Matcher matcher_letras = letras.matcher(contrasena);
+        Pattern numeros = Pattern.compile("[0-9]+");
+        Matcher matcher_numeros = numeros.matcher(contrasena);
 
-            Pattern numeros = Pattern.compile("[0-9]+");
-            Matcher matcher_numeros = numeros.matcher(contrasena);
+        Pattern secuencia = Pattern.compile("123");
+        Matcher matcher_secuencia = secuencia.matcher(contrasena);
 
-            Pattern secuencia = Pattern.compile("123");
-            Matcher matcher_secuencia = secuencia.matcher(contrasena);
-
-            if (!matcher_secuencia.find() && (matcher_letras.find() && matcher_numeros.find()) == true) {
-                if (contrasena.length() >= 8 && contrasena.length() <= 20) {
-                    salir = true;
-                } else {
-                    System.out.println("Tu contraseña debe tener entre 8 a 20 carácteres");
-                    return "";
-                }
-
+        if (!matcher_secuencia.find() && (matcher_letras.find() && matcher_numeros.find()) == true) {
+            if (contrasena.length() >= 8 && contrasena.length() <= 20) {
             } else {
-                System.out.println("Contraseña no válida, la contraseña debe tener al menos un carácter y un número, no contener una secuencia de números y tener una longitud de 8 a 20 carácteres.");
+                System.out.println("Tu contraseña debe tener entre 8 a 20 carácteres");
                 return "";
             }
-        } while (!salir);
+
+        } else {
+            System.out.println("Contraseña no válida, la contraseña debe tener al menos un carácter y un número, no contener una secuencia de números y tener una longitud de 8 a 20 carácteres.");
+            return "";
+        }
         return contrasena;
     }
 
@@ -144,30 +113,28 @@ public class Validaciones {
         char numero;
         boolean valido = true;
 
-        do {
-            numero_telefono = numero_telefono.replace("-", "");
-            numero_telefono = numero_telefono.replace(" ", "");
+        numero_telefono = numero_telefono.replace("-", "");
+        numero_telefono = numero_telefono.replace(" ", "");
 
-            if (numero_telefono.length() != 9) {
-                System.out.println("Número de teléfono no válido, vuelve a introducirlo: ");
-                return "";
-            } else {
-                for (int i = 1; i < numero_telefono.length(); i++) {
-                    numero = numero_telefono.charAt(i);
+        if (numero_telefono.length() != 9) {
+            System.out.println("Número de teléfono no válido, vuelve a introducirlo: ");
+            return "";
+        } else {
+            for (int i = 1; i < numero_telefono.length(); i++) {
+                numero = numero_telefono.charAt(i);
 
-                    if (numero_telefono.charAt(0) < '6' || numero_telefono.charAt(0) > '7') {
-                        System.out.println("Número de teléfono no válido, vuelva a introducirlo: ");
-                        return "";
-                    } else if (numero < '0' || numero > '9') {
-                        System.out.println("Número de teléfono no válido, vuelva a introducirlo: ");
-                        return "";
+                if (numero_telefono.charAt(0) < '6' || numero_telefono.charAt(0) > '7') {
+                    System.out.println("Número de teléfono no válido, vuelva a introducirlo: ");
+                    return "";
+                } else if (numero < '0' || numero > '9') {
+                    System.out.println("Número de teléfono no válido, vuelva a introducirlo: ");
+                    return "";
 
-                    } else {
-                        valido = false;
-                    }
+                } else {
+                    valido = false;
                 }
             }
-        } while (valido);
+        }
         return numero_telefono;
     }
 
@@ -175,55 +142,41 @@ public class Validaciones {
         String numeros_dni, letra_dni, letras_validas = "TRWAGMYFPDXBNJZSQVHLCKE";
         int valor;
         char total;
-        boolean bucle = true;
-        boolean dni_mal = true;
 
+        dni = dni.toUpperCase();
+        dni = dni.replace(" ", "");
 
-        do {
+        if (dni.length() != 9) {
+            System.out.println("DNI no válido, vuelve a introducirlo por favor: ");
+            return "";
+        } else {
+            numeros_dni = dni.substring(0, 8);
+            letra_dni = dni.substring(8, 9);
 
-            do {
-                dni = dni.toUpperCase();
-                dni = dni.replace(" ", "");
+            for (int i = 0; i < numeros_dni.length(); i++) {
+                total = numeros_dni.charAt(i);
 
-                if (dni.length() != 9) {
-                    System.out.println("DNI no válido, vuelve a introducirlo por favor: ");
+                if ((total < '0' || total > '9')) {
+                    System.out.println("DNI incorrecto, vuelve a introducirlo: ");
                     return "";
-                } else {
-                    numeros_dni = dni.substring(0, 8);
-                    letra_dni = dni.substring(8, 9);
-
-                    for (int i = 0; i < numeros_dni.length(); i++) {
-                        total = numeros_dni.charAt(i);
-
-                        if ((total < '0' || total > '9')) {
-                            System.out.println("DNI incorrecto, vuelve a introducirlo: ");
-                            return "";
-                        } else {
-                            dni_mal = false;
-                        }
-                    }
                 }
-            } while (dni_mal);
+            }
+        }
 
-            try {
-                numeros_dni = dni.substring(0, 8);
-                letra_dni = dni.substring(8, 9);
+        try {
+            numeros_dni = dni.substring(0, 8);
+            letra_dni = dni.substring(8, 9);
 
-                valor = Integer.parseInt(numeros_dni);
-                valor = valor % 23;
-                if (!letra_dni.equals(String.valueOf(letras_validas.charAt(valor)))) {
-                    System.out.println("DNI incorrecto, por favor vuelva a introducirlo: ");
-                    return "";
-                } else {
-                    bucle = false;
-                }
-            } catch (NumberFormatException ex) {
+            valor = Integer.parseInt(numeros_dni);
+            valor = valor % 23;
+            if (!letra_dni.equals(String.valueOf(letras_validas.charAt(valor)))) {
                 System.out.println("DNI incorrecto, por favor vuelva a introducirlo: ");
                 return "";
             }
-
-        } while (bucle);
-
+        } catch (NumberFormatException ex) {
+            System.out.println("DNI incorrecto, por favor vuelva a introducirlo: ");
+            return "";
+        }
         return dni;
     }
 
@@ -239,8 +192,6 @@ public class Validaciones {
         int dia;
         int mes;
         int anno;
-        boolean salir = false;
-        boolean volver = false;
 
         fecha = fecha.replace("/", "-");
         fecha = fecha.replace(" ", "-");
@@ -290,12 +241,10 @@ public class Validaciones {
             if (anno < 1920 || fecha_validada.isAfter(fecha_mayor.minusYears(18))) {
                 System.out.println("Lo siento, necesita tener 18 años debido a razones de seguridad.");
                 return "";
-            } else {
-                salir = true;
             }
         }
         try {
-            fecha = fecha_validada.toString();
+            boolean b = fecha == fecha_validada.toString();
         } catch (NullPointerException ex) {
             System.out.println("Ha introducido una fecha incorrecta");
             return "";
@@ -309,8 +258,6 @@ public class Validaciones {
         int dia;
         int mes;
         int anno;
-        boolean salir = false;
-        boolean volver = false;
 
         fecha = fecha.replace("/", "-");
         fecha = fecha.replace(" ", "-");
@@ -359,12 +306,10 @@ public class Validaciones {
             if (fecha_validada.isBefore(LocalDate.now())) {
                 System.out.println("Lo siento, para crear un evento debe ser del dia de hoy hacia delante.");
                 return "";
-            } else {
-                salir = true;
             }
         }
         try {
-            fecha = fecha_validada.toString();
+            boolean b = fecha == fecha_validada.toString();
         } catch (NullPointerException ex) {
             System.out.println("Ha introducido una fecha incorrecta");
             return "";
@@ -377,9 +322,6 @@ public class Validaciones {
         LocalTime horaValidada = null;
         int horaBien = 0;
         int minuto = 0;
-        int segundo;
-        boolean salir = false;
-        boolean volver = false;
 
         hora = hora.replace("/", ":");
         hora = hora.replace(" ", ":");
@@ -534,6 +476,7 @@ public class Validaciones {
         return pago;
     }
 
+    //COMPRUEBA QUE UN VALOR SEA INT
     public static String validarInt(String int_valido) {
         try {
             Integer.parseInt(int_valido);
@@ -545,6 +488,8 @@ public class Validaciones {
         return int_valido;
     }
 
+
+    //COMPRUEBA QUE UN VALOR SEA DOUBLE
     public static String validarDouble(String double_valido) {
         try {
             Double.parseDouble(double_valido);

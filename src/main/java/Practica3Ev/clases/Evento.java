@@ -19,7 +19,6 @@ public class Evento implements Serializable {
     ArrayList<Usuario> lista_asistentes;
 
     public Evento(){
-
     }
 
     public Evento(String nombre, String invitado, Sala sala, LocalDate fecha, LocalTime hora, double precio, String tipo_evento, int asistentes_maximos, ArrayList<Usuario> lista_asistentes) {
@@ -113,6 +112,7 @@ public class Evento implements Serializable {
     }
 
     public void mostrar_info_evento() {
+
         fecha_formateada = fecha.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 
         System.out.println("\nTipo de evento: " + tipo_evento);
