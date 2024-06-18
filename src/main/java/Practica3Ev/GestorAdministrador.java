@@ -1,8 +1,10 @@
 package Practica3Ev;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -93,14 +95,18 @@ public class GestorAdministrador {
                 tipoEvento = Validaciones.validarNombre(tipoEvento);
             } while (tipoEvento.isEmpty());
 
-            fechaEvento = LocalDate.EPOCH.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            try{
+                LocalDate fecha = LocalDate.parse(fechaEvento);
+                LocalTime hora = LocalTime.parse(horaEvento);
+                double precio = Double.parseDouble(precioEvento);
 
-            LocalDate fecha = LocalDate.parse(fechaEvento);
-            double precio = Double.parseDouble(precioEvento);
+                listado_eventos.add(new Evento(nombreEvento, invitado, sala, fecha, hora, precio, tipoEvento, sala.getCapacidad_maxima(), new ArrayList<Usuario>()));
 
-            listado_eventos.add(new Evento(nombreEvento, invitado, sala, fecha, LocalTime.of(12, 54), precio, tipoEvento, sala.getCapacidad_maxima(), new ArrayList<Usuario>()));
+                System.out.println("EVENTO AÑADIDO CORRECTAMENTE");
 
-            System.out.println("EVENTO AÑADIDO CORRECTAMENTE");
+            }catch (DateTimeParseException ex){
+                System.out.println("Error al parsear fecha");
+            }
 
         } while (salir);
 

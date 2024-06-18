@@ -244,7 +244,7 @@ public class Validaciones {
             }
         }
         try {
-            boolean b = fecha == fecha_validada.toString();
+             fecha = fecha_validada.toString();
         } catch (NullPointerException ex) {
             System.out.println("Ha introducido una fecha incorrecta");
             return "";
@@ -309,7 +309,7 @@ public class Validaciones {
             }
         }
         try {
-            boolean b = fecha == fecha_validada.toString();
+             fecha = fecha_validada.toString();
         } catch (NullPointerException ex) {
             System.out.println("Ha introducido una fecha incorrecta");
             return "";
@@ -346,7 +346,7 @@ public class Validaciones {
             horaValidada = LocalTime.of(horaBien, minuto);
         }
         try {
-            boolean b = hora == horaValidada.toString();
+            hora = horaValidada.toString();
         } catch (NullPointerException ex) {
             System.out.println("Introduce una hora adecuada");
             return "";
